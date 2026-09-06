@@ -28,8 +28,8 @@ int compara_strings(const char* string1, const char* string2) {
 	return !strcmp(string1, string2);
 }
 
-int procura_vaga (void* lista, size_t tam, char tipo) {
-	if (tipo == 'P' || tipo == 'p') {
+int procura_vaga (void* lista, size_t tam, uint8_t tipo) {
+	if (tipo == INDIVIDUO || tipo == INDIVIDUO) {
 		individuo* p = (individuo*)lista;
 
 		for (int i = 0; i < tam; ++i) {
@@ -39,7 +39,7 @@ int procura_vaga (void* lista, size_t tam, char tipo) {
 		}
 	}
 
-	else if (tipo == 'D' || tipo == 'd') {
+	else if (tipo == DISCIPLINA || tipo == DISCIPLINA) {
 		disciplina* p = (disciplina*)lista;
 
 		for (int i = 0; i < tam; ++i) {
@@ -54,10 +54,6 @@ int procura_vaga (void* lista, size_t tam, char tipo) {
 	}
 
 	return LISTA_CHEIA;
-}
-
-int destrincha_nascimento(int data_nascimento, char DMA) {
-	return 0;
 }
 
 int input_char_non_canon(void) {
