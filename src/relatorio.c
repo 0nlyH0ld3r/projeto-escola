@@ -4,11 +4,11 @@
 #include "../headers/relatorio.h"
 
 void listar_individuos(individuo* lista, size_t tam, ordenar ordenacao) {
-	individuo buff_lista[tam];	// Buffer para o sort da função ordenacao
+	individuo buff_lista[tam]; // Buffer para o sort da função ordenacao
 
-	memcpy(buff_lista, lista, sizeof(individuo) * tam); // Copia os dados de lista em buff_lista
+	memcpy(buff_lista, lista, sizeof(individuo) * tam);	// Copia os dados de lista em buff_lista
 
-	if (ordenacao != NULL) ordenacao(buff_lista, tam); // Passar NULL caso não deseje ordenar
+	if (ordenacao != NULL) ordenacao(buff_lista, tam);	// Passar NULL caso não deseje ordenar
 
 	for (int i = 0; i < tam; ++i) {
 		if (buff_lista[i].estado == NAO_ATIVO) continue;
@@ -32,7 +32,6 @@ void listar_individuos(individuo* lista, size_t tam, ordenar ordenacao) {
 	}
 }
 
-
 void listar_disciplinas(disciplina* lista, size_t tam, ordenar ordenacao) {
 	individuo buff_lista[tam];	// Buffer para o sort da função ordenacao
 	memcpy(buff_lista, lista, tam); // Copia os dados de lista em buff_lista
@@ -49,13 +48,28 @@ void listar_disciplinas(disciplina* lista, size_t tam, ordenar ordenacao) {
 	}
 }
 
+int compara_datas(data data1, data data2) {
+	if (data1.ano < data2.ano) {
+		return true;
+	}
+
+	if (data1.mes < data2.mes) {
+		return true;
+	}
+
+	if (data1.dia < data2.dia) {
+		return true;
+	}
+
+	return false;
+}
 
 void ordenar_nascimento(individuo* buff_lista, size_t tam) {
 	for (int i = 1; i < tam; ++i) {
 		individuo tmp = buff_lista[i];
 		int j = i;
 
-		while (tmp.nascimento.ano < buff_lista[j - 1].nascimento.ano) {
+		while (compara_datas(tmp.nascimento, buff_lista[j - 1].nascimento) == true) {
 			tmp = buff_lista[i];
 			buff_lista[j - 1] = buff_lista[j];
 
@@ -66,38 +80,6 @@ void ordenar_nascimento(individuo* buff_lista, size_t tam) {
 
 		buff_lista[j] = tmp;
 
-		while (tmp.nascimento.ano  == buff_lista[j - 1].nascimento.ano) {
-			if (tmp.nascimento.mes < buff_lista[j - 1].nascimento.mes) {
-				tmp = buff_lista[i];
-				buff_lista[j - 1] = buff_lista[j];
-
-				--j;
-
-				continue;
-			}
-
-			break;
-		}
-
-		buff_lista[j] = tmp;
-
-		while (tmp.nascimento.ano  == buff_lista[j - 1].nascimento.ano) {
-			while (tmp.nascimento.mes  == buff_lista[j - 1].nascimento.mes) {
-				if (tmp.nascimento.dia == buff_lista[j - 1].nascimento.dia) {
-					tmp = buff_lista[i];
-					buff_lista[j - 1] = buff_lista[j];
-
-					--j;
-
-					continue;
-				}
-
-				break;
-			}
-			break;
-		}
-
-		buff_lista[j] = tmp;
 	}
 }
 
