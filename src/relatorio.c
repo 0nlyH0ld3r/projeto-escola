@@ -48,7 +48,7 @@ void listar_disciplinas(disciplina* lista, size_t tam, ordenar ordenacao) {
 	}
 }
 
-int compara_datas(data data1, data data2) {
+static int compara_datas(data data1, data data2) {
 	if (data1.ano < data2.ano) {
 		return true;
 	}
