@@ -1,17 +1,24 @@
 # Projeto escola
 
 ## Estrutura atual da codebase
-    |--makefile
-    |--.gitignore
-    
-    |--src
-    |    base_projeto.c
-    |    menu.c
-    
-    |--headers
-    |    base_projeto.h
-    |-- build 
-    |    builds locais
+    .
+    ├── explicando_funcoes.md
+    ├── headers
+    │   ├── constants.h
+    │   ├── escola.h
+    │   ├── menu.h
+    │   ├── relatorio.h
+    │   └── utilidades.h
+    ├── Makefile
+    ├── README.md
+    └── src
+        ├── escola.c
+        ├── main.c
+        ├── menu.c
+        ├── relatorio.c
+        └── utilidades.c
+
+    3 directories, 13 files
     
 ## Arquitetura Proposta
 ### Estrutura proposta
