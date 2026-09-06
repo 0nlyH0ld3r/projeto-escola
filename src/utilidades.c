@@ -28,7 +28,7 @@ int compara_strings(const char* string1, const char* string2) {
 	return !strcmp(string1, string2);
 }
 
-int procura_vaga (void* lista, size_t tam, uint8_t tipo) {
+int procura_vaga (const void* lista, size_t tam, uint8_t tipo) {
 	if (tipo == INDIVIDUO || tipo == INDIVIDUO) {
 		individuo* p = (individuo*)lista;
 

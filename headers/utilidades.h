@@ -48,7 +48,7 @@
 	 * para determinar se há ou não espaço para um novo Aluno/Professor ou Disciplina
 	 *
 	 */
-	int procura_vaga(void* lista, size_t tam, uint8_t tipo);
+	int procura_vaga(const void* lista, size_t tam, uint8_t tipo);
 
 
 
@@ -60,6 +60,7 @@
 	 */
 	void input_string(char *string, size_t tam);
 
+	int compara_strings(const char* string1, const char* string2);
 
 	/** @brief: Recebe um caractere, tal qual o getchar(). Entretanto, sem a necessidade de apertar enter pra enviar o caractere.
 	 *
