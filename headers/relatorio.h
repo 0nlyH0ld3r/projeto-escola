@@ -16,9 +16,12 @@
 	 */
 	typedef void (*ordenar)(individuo*, size_t);
 
-	void listar_individuos(individuo* lista, size_t tam, ordenar ordenacao);
+	void listar(void* lista, size_t tamanho,ordenar ordenacao,
+		    uint8_t eh_doscente, uint8_t tipo);
 
-	void listar_disciplinas(disciplina* lista, size_t tam, ordenar ordenacao);
+	void listar_individuos(individuo* lista, size_t tamanho, ordenar ordenacao, uint8_t eh_doscente);
 
-	void ordenar_nascimento(individuo* buff_lista, size_t tam);
+	void listar_disciplinas(disciplina* lista, size_t tamanho, ordenar ordenacao);
+
+	void ord_nascimento(individuo* buff_l, size_t tam);
 #endif
