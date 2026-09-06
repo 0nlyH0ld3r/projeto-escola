@@ -19,7 +19,7 @@ void inicia_escola(int teste){
 /// @brief main
 /// @param  void
 /// @return void
-int main(int argc){
+int main(int argc, char** argv){
     if (argc > 1) {
     inicia_escola(DEBUG);
     return 0;        

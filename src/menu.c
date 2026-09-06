@@ -9,13 +9,17 @@
 #define TAM_LISTA_DISCIPLINAS 3
 
 void menu(escola* escola, int debug){
-	if(debug) printf("ENTROU MENU.\n\n");
-	system("clear");
+	int sair = 0;
+	int opcao;
 	individuo lista_individuos[TAM_LISTA_ALUNOS];
 	disciplina lista_disciplinas[TAM_LISTA_DISCIPLINAS];
 
-	int sair = 0;
-	int opcao;
+	inicializar_lista(lista_individuos, TAM_LISTA_ALUNOS, INDIVIDUO);
+	inicializar_lista(lista_disciplinas, TAM_LISTA_DISCIPLINAS, DISCIPLINA);
+	system("clear");
+
+	if(debug) printf("ENTROU MENU.\n\n");
+
 	while(!sair){ //sair == 0
 		for(int i =0; i<60;i++) printf("*");
 		printf("\n");
