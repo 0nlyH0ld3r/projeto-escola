@@ -1,7 +1,9 @@
-#include <unistd.h>
 
 #ifndef _INPUT_FUNCTIONS
 #define _INPUT_FUNCTIONS
+#include "constants.h"
+#include <stdint.h>
+
 
 
 
@@ -46,7 +48,7 @@
 	 * para determinar se há ou não espaço para um novo Aluno/Professor ou Disciplina
 	 *
 	 */
-	int procura_vaga(void* lista, size_t tam, char tipo);
+	int procura_vaga(void* lista, size_t tam, uint8_t tipo);
 
 
 
@@ -66,7 +68,5 @@
 	 *
 	 */
 	int input_char_non_canon(void);
-
-	int destrincha_nascimento(int data_nascimento, char DMA);
 
 #endif
