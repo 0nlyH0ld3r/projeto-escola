@@ -7,11 +7,9 @@
 	// Definindo macros para true e false caso não estejam definidas
 	// usando #ifndef (if not defined).
 
-	#ifndef true 
+	#ifndef _bool 
+	#define _bool
 	#define true		1 
-	#endif
-
-	#ifndef false
 	#define false		0
 	#endif
 
@@ -28,23 +26,52 @@
 	};
 
 	///MAXIMOS VALORES PARA TAMANHO DOS VETORES
-	#define MAX_ALUNOS_ESCOLA		5
-	#define MAX_DISCIPLINAS_ESCOLA		2
-	#define MAX_PROFESSORES_ESCOLA		2
-	#define MAX_NUMERO_ALUNOS_DISCIPLINA	3
-	#define MAX_CARACTERE_NOME		40
-	
-	#define MAX_DISCIPLINAS_INDIVIDUO	2
-	#define MAX_CHAR_COD_DISCIPLINA		6
+	enum valores_maximos {
 
+		MAX_ALUNOS_ESCOLA		= 5,
+		MAX_DISCIPLINAS_ESCOLA		= 2,
+		MAX_PROFESSORES_ESCOLA		= 2,
 
-	// Struct do invidivuo: pode ser tanto professor quanto aluno
+		MAX_CHAR_NOME			= 40,
+		MAX_CHAR_COD_DISCIPLINA		= 6,
+		MAX_CHAR_CPF			= 14,
+
+		MAX_NUMERO_ALUNOS_DISCIPLINA	= 3,
+		MAX_DISCIPLINAS_INDIVIDUO	= 2,
+
+	};
+
+	enum Ano {
+		ANO_ATUAL = 20260000,
+	};
+
+	/**
+	*	nome
+	*	disciplinas
+	*	n_disciplinas;	
+	*	matricula;	
+	*	nascimento;	
+	*	cpf;		
+	*	genero;		
+	*	eh_doscente;	
+	*	estado;		
+	*/
 	typedef struct Individuo individuo;
 
-	// Struct das disciplinas
+	/**
+	*	nome
+	*	codigo
+	*	professor
+	*	lista_alunos
+	*	estado
+	*/
 	typedef struct Disciplina disciplina;
 
-	// Struct do objeto escola (Recebe possui lista de individuos e lista de disciplinas)
+	/**
+	 *	disciplinas
+	 *	professores
+	 *	alunos
+	 */
 	typedef struct Escola escola;
 
 	// Struct para data (Dia, mês, ano)
@@ -63,12 +90,12 @@
 	};
 
 	struct Individuo {
-		char		nome[MAX_CARACTERE_NOME];		// Nota: Não tentem escrever nada por cima disso.
+		char		nome[MAX_CHAR_NOME];			// Nota: Não tentem escrever nada por cima disso.
 		disciplina*	disciplinas[MAX_DISCIPLINAS_INDIVIDUO];	// Lista de disciplinas do individuo.
 		unsigned int	n_disciplinas;				// Número de disciplinas do individuo.
 		unsigned int	matricula;				// Matrícula. Também usa pro professor.
 		data		nascimento;				// Data de nascimento no padrão DDMMYY.
-		unsigned int	cpf;					// CPF do indivíduo.
+		char		cpf[14];				// CPF do indivíduo.
 		char		genero;					// F | M  -> Feminino | Masculino.
 		char		eh_doscente;				// true -> Professor | false -> Aluno.
 		char		estado;					// NAO_ATIVO <- Vaga livre pra uso
@@ -77,11 +104,11 @@
 
 
 	struct Disciplina {
-		char		nome[MAX_CARACTERE_NOME];			// Nome da disciplina.
-		char		codigo[MAX_CHAR_COD_DISCIPLINA];		// Código da disciplina. Ex: INF029
-		individuo*	professor;					// Ponteiro para Professor responsável
-		individuo*	lista_alunos[MAX_NUMERO_ALUNOS_DISCIPLINA];	// Lista de alunos matriculados
-		char		estado;						// NAO_ATIVO <- Vaga livre pra uso
+		char		nome[MAX_CHAR_NOME];			// Nome da disciplina.
+		char		codigo[MAX_CHAR_COD_DISCIPLINA];	// Código da disciplina. Ex: INF029
+		individuo*	professor;				// Ponteiro para Professor responsável
+		individuo*	alunos[MAX_NUMERO_ALUNOS_DISCIPLINA];	// Lista de alunos matriculados
+		char		estado;					// NAO_ATIVO <- Vaga livre pra uso
 	};
 	
 
