@@ -118,9 +118,8 @@ void output_individuo(individuo buff_i) {
 
 		printf("Matricula: %d\n", buff_i.matricula);
 
-		printf("Número de disciplinas: %d\n", buff_i.n_disciplinas);
+		printf("Número de disciplinas: %d\n\n\n", buff_i.n_disciplinas);
 
-		puts("\n\n");
 }
 
 static void output_disciplina(disciplina buff_d) {
