@@ -14,7 +14,7 @@ void listar(void* lista, size_t tamanho, ordenar ordenacao,
 		listar_individuos((individuo*)lista, tamanho, ordenacao, eh_doscente);
 		break;
 	case DISCIPLINA:
-		listar_disciplinas((disciplina*)lista, tamanho, ordenacao);
+		listar_disciplinas((disciplina*)lista, tamanho);
 		break;
 	}
 }
@@ -26,35 +26,43 @@ void listar_individuos(individuo* lista, size_t tam, ordenar ord, uint8_t eh_dos
 
 	if (ord != NULL) ord(buff_lista, tam);	// Passar NULL caso não deseje ordenar
 
+	switch (eh_dos) {
+	case DOSCENTE:
+		puts("************************\n");
+		puts("**LISTA DE PROFESSORES**\n");
+		puts("************************\n\n");
+		break;
+
+	case DISCENTE:
+		puts("***********************\n");
+		puts("****LISTA DE ALUNOS****\n");
+		puts("***********************\n\n");
+		break;
+	case AMBOS:
+		puts("**********************\n");
+		puts("***LISTA DE PESSOAS***\n");
+		puts("**********************\n\n");
+		break;
+	}
+
 	for (int i = 0; i < tam; ++i) {
-		if (buff_lista[i].estado == NAO_ATIVO) continue;
+		if (eh_dos == AMBOS){ 
+			output_individuo(buff_lista[i]); 
+		}
 
-		switch (eh_dos) {
-		case true:
-			puts("************************\n");
-			puts("**LISTA DE PROFESSORES**\n");
-			puts("************************\n\n");
-			if (lista[i].eh_doscente == true)
-				output_individuo(lista[i]);
-			break;
+		else if (eh_dos == DOSCENTE) {
+			if (buff_lista[i].eh_doscente == true) { output_individuo(buff_lista[i]); }
+			printf("Eu estive aqui!\n");
+		}
 
-		case false:
-			if (lista[i].eh_doscente == false)
-			puts("***********************\n");
-			puts("****LISTA DE ALUNOS****\n");
-			puts("***********************\n\n");
-				output_individuo(lista[i]);
+		else if (eh_dos == DISCENTE) {  
+			if (buff_lista[i].eh_doscente == false) { output_individuo(buff_lista[i]); }
 		}
 	}
 }
 
 
-void listar_disciplinas(disciplina* lista, size_t tam, ordenar ord) {
-	individuo buff_lista[tam];	// Buffer para o sort da função ordenacao
-	memcpy(buff_lista, lista, tam); // Copia os dados de lista em buff_lista
-
-	if (ord != NULL) ord(buff_lista, tam); // Passar NULL caso não deseje ordenar
-
+void listar_disciplinas(disciplina* lista, size_t tam) {
 	puts("************************\n");
 	puts("**LISTA DE DISCIPLINAS**\n");
 	puts("************************\n\n");
@@ -62,21 +70,28 @@ void listar_disciplinas(disciplina* lista, size_t tam, ordenar ord) {
 		if (lista[i].estado == NAO_ATIVO) continue;
 
 		printf("Disciplina: %s\n", lista[i].nome);
-
 		printf("Código: %s\n", lista[i].codigo);
 		printf("Doscente responsável: %s\n\n\n", lista[i].professor->nome);
 	}
 }
 
 
-void ord_nascimento(individuo* buff_l, size_t tam) {
+int rev_data (data tmp) {
+	int data = 0;
+	data += tmp.dia * 1;
+	data += tmp.mes * 10000;
+	data += tmp.ano * 1000000;
+
+	return data;
+}
+
+void ord_data(individuo* buff_l, size_t tam) {
 	for (int i = 1; i < tam; ++i) {
 		individuo tmp = buff_l[i];
 		int j = i;
 
-		while (compara_datas(tmp.nascimento, buff_l[j - 1].nascimento) == true) {
-			tmp = buff_l[i];
-			buff_l[j - 1] = buff_l[j];
+		while (rev_data(tmp.data) < rev_data(buff_l[j-1].data)) {
+			buff_l[j] = buff_l[j - 1];
 
 			--j;
 
@@ -89,7 +104,7 @@ void ord_nascimento(individuo* buff_l, size_t tam) {
 }
 
 static int compara_datas(data d1, data d2) {
-	if (d1.ano < d2.ano) {
+	if (d1.dia < d2.dia) {
 		return true;
 	}
 
@@ -97,7 +112,7 @@ static int compara_datas(data d1, data d2) {
 		return true;
 	}
 
-	if (d1.dia < d2.dia) {
+	if (d1.ano < d2.ano) {
 		return true;
 	}
 
@@ -105,26 +120,27 @@ static int compara_datas(data d1, data d2) {
 }
 
 void output_individuo(individuo buff_i) {
-		if (buff_i.eh_doscente == true)	printf("Professor: %s\n", buff_i.nome);
-		else					printf("Aluno: %s\n", buff_i.nome);
+	if (buff_i.estado == NAO_ATIVO) return;
+	if (buff_i.eh_doscente == true)	printf("Professor: %s\n", buff_i.nome);
+	else				printf("Aluno: %s\n", buff_i.nome);
 
-		printf("CPF: %s\n", buff_i.cpf);
-		printf("Data de Nascimento: %d %d %d\n", 
-				buff_i.nascimento.dia,
-				buff_i.nascimento.mes,
-				buff_i.nascimento.ano);
+	printf("CPF: %s\n", buff_i.cpf);
+	printf("Data de Nascimento: %2d/%2d/%4d\n", 
+			buff_i.data.dia,
+			buff_i.data.mes,
+			buff_i.data.ano);
 
-		printf("Gênero: %s\n", buff_i.genero == 'M' ? "Masculino" : "Feminino");
+	printf("Gênero: %s\n", buff_i.genero == 'M' ? "Masculino" : "Feminino");
 
-		printf("Matricula: %d\n", buff_i.matricula);
+	printf("Matricula: %d\n", buff_i.matricula);
 
-		printf("Número de disciplinas: %d\n\n\n", buff_i.n_disciplinas);
+	printf("Número de disciplinas: %d\n\n\n", buff_i.n_disciplinas);
 
 }
 
 static void output_disciplina(disciplina buff_d) {
-		printf("Disciplina: %s\n", buff_d.nome);
+	printf("Disciplina: %s\n", buff_d.nome);
 
-		printf("Código: %s\n", buff_d.codigo);
-		printf("Doscente responsável: %s\n\n\n", buff_d.professor->nome);
+	printf("Código: %s\n", buff_d.codigo);
+	printf("Doscente responsável: %s\n\n\n", buff_d.professor->nome);
 }

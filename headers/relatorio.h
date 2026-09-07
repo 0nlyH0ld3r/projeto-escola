@@ -21,7 +21,7 @@
 
 	void listar_individuos(individuo* lista, size_t tamanho, ordenar ordenacao, uint8_t eh_doscente);
 
-	void listar_disciplinas(disciplina* lista, size_t tamanho, ordenar ordenacao);
+	void listar_disciplinas(disciplina* lista, size_t tamanho);
 
-	void ord_nascimento(individuo* buff_l, size_t tam);
+	void ord_data(individuo* buff_l, size_t tam);
 #endif
