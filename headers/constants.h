@@ -9,20 +9,26 @@
 
 	#ifndef _bool 
 	#define _bool
-	#define true		1 
-	#define false		0
+		#define true	1 
+		#define false	0
 	#endif
 
 	enum Status {
-		LISTA_CHEIA	=	-1,
-		TIPO_INVALIDO	=	-2,
-		NAO_ATIVO	=	 0,
-		ATIVO		=	 1,
+		LISTA_CHEIA	= -1,
+		TIPO_INVALIDO	= -2,
+		NAO_ATIVO	=  0,
+		ATIVO		=  1,
+	};
+
+	enum Cargo {
+		DISCENTE	= 0,
+		DOSCENTE	= 1,
+		AMBOS		= 2,
 	};
 
 	enum Tipo {
-		INDIVIDUO	=	1,
-		DISCIPLINA	=	2,
+		INDIVIDUO	= 1,
+		DISCIPLINA	= 2,
 	};
 
 	///MAXIMOS VALORES PARA TAMANHO DOS VETORES
@@ -50,7 +56,7 @@
 	*	disciplinas
 	*	n_disciplinas;	
 	*	matricula;	
-	*	nascimento;	
+	*	data;	
 	*	cpf;		
 	*	genero;		
 	*	eh_doscente;	
@@ -94,11 +100,11 @@
 		disciplina*	disciplinas[MAX_DISCIPLINAS_INDIVIDUO];	// Lista de disciplinas do individuo.
 		unsigned int	n_disciplinas;				// Número de disciplinas do individuo.
 		unsigned int	matricula;				// Matrícula. Também usa pro professor.
-		data		nascimento;				// Data de nascimento no padrão DDMMYY.
+		data		data;				// Data de data no padrão DDMMYY.
 		char		cpf[14];				// CPF do indivíduo.
 		char		genero;					// F | M  -> Feminino | Masculino.
-		char		eh_doscente;				// true -> Professor | false -> Aluno.
-		char		estado;					// NAO_ATIVO <- Vaga livre pra uso
+		unsigned int	eh_doscente;				// true -> Professor | false -> Aluno.
+		unsigned int	estado;					// NAO_ATIVO <- Vaga livre pra uso
 		
 	};
 
