@@ -58,17 +58,17 @@ void listar_disciplinas(disciplina* lista, size_t tam, ordenar ordenacao);
 
 O mesmo que a função acima, mas somente pra disciplinas.
 
-## ordenar_nascimento
+## ordenar_data
 
 ```
-void ordenar_nascimento(individuo* buff_lista, size_t tam);
+void ordenar_data(individuo* buff_lista, size_t tam);
 ```
 
 Recebe uma lista de individuos e o tamanho dessa lista.
 
 Preferivelmente deve ser utilizada como parâmetro para lista_individuos.
 
-Ordena a lista por ordem de nascimento.
+Ordena a lista por ordem de data.
 
 ## compara_datas
 
@@ -84,7 +84,7 @@ Retorna true caso dia, mês ou ano de data1 seja menor que DMA de data2.
 
 Retorna false caso data2 seja maior.
 
-Função local (static) somente para uso em ordenar_nascimento.
+Função local (static) somente para uso em ordenar_data.
 
 Caso acho interessante, é possível tornar global.
 
