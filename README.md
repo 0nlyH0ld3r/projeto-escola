@@ -42,29 +42,68 @@
         └──  app
 ### Lógica Proposta   
 
-    main
+    main    
      │
      ▼
-    menu -> utilidades
+    menu -> ┌──────────────────────┐
+     │      │  Utilidades:         │  
+     │      │                      │
+     │      │ x VLD. DATA          │       
+     │      │ x VLD. CPF           │       
+     │      │ x VLD. NOME          │       
+     │      │ * GERA MATRICULA     │
+     │      │ * PROCURA VAGA       │
+     │      │                      │
+     │      │ x PROCURA ARQ. SALVO │
+     │      │ x SALVA ARQ(JSON).   │
+     │      │                      │       
+     │      └──────────────────────┘
      │
-     ├──────────────► escola -> utilidades
-     │                    │
-     │                    └──► retorna ao menu
+     ├──────────────► escola -> utilidades            ┌──────────────────────┐
+     │                 │                              │ * ALTERA INDV.       │
+     │                 │                              │ * ADC INDV.          │
+     │                 │                              │ * DEL INDV.          │
+     │                 │                              │ * ATZ INDV.          │
+     │                 │                              │                      │
+     │                 │                              │ * ALTERA DISC.       │
+     │                 │                              │ * ADC DISC.          │
+     │                 │                              │ * DEL DISC.          │
+     │                 │                              │ * ATZ DISC.          │
+     │                 │                              │ * INSCRV. ALUNO      │
+     │                 │                              └──────────────────────┘
+     │                 ├── Cadastro Indv.(Matric;Nome;Sexo;Data;CPF;Cargo)
+     │                 ├── Cadastro Disc. (Nome;Cod.;Semestre;Prof.)       
+     │                 │   ├── Cadastrar alunos na Disc.
+     │                 │
+     │◄────────────────┘ retorna ao menu 
      │
-     ├──────────────► relatorios -> utilidades
-     │                    │
-     │                    └──► retorna ao menu
+     ├──────────────► relatorios -> utilidades        ┌──────────────────────┐
+     │                 │                              │ * LS INDV.           │
+     │                 │                              │ * LS ALUN.           │
+     │                 │                              │ * LS PROF.           │
+     │                 │                              └──────────────────────┘
+     │                 ├── Lista Indv.(Aln ou Prof.)
+     │                 ├── Lista Indv. por sexo(Aln ou Prof.)
+     │                 ├── Lista Indv. por nome(Aln ou Prof.)
+     │                 ├── Lista Indv. por data(Aln ou Prof.)
+     │                 ├── Lista Indv. por string
+     │                 ├── Lista Indv. ALUNOS matriculados em menos de 3 disciplinas
+     │                 ├── Lista Indv. Aniversariantes do mês
+     │                 ├── Lista Disciplinas.
+     │                 ├── Lista Disciplinas - Dados de uma disciplina específica.
+     │                 ├── Lista Disciplinas (com nome do professor) que extrapolam 40 vagas.
+     │                 │
+     │◄────────────────┘ retorna ao menu 
      │
+     ▼
      └──────────────► sair
-                          │
-                          ▼
-                         main
-                          │
-                          ▼
-                         fim
+                       │
+                       ▼
+                      main
+                       │
+                       ▼
+                      fim
     
 ## Alunos
  - Bruno Vinicius
  - Igor Lisboa Ramos
- - João Abreu
- - Vitor Chagas
