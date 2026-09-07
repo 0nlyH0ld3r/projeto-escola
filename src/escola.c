@@ -22,13 +22,11 @@ void cadastrar(void* lista, int index, uint8_t tipo) {
 void input_individuo(individuo* lista, int index) {
 	puts("Digite seu nome: ");
 	input_string(lista[index].nome, 40);
-	puts("\n\n");
 
-	puts("Digite seu CPF (111.111.111-11): ");
+	puts("\n\nDigite seu CPF (111.111.111-11): ");
 	input_string(lista[index].cpf, MAX_CHAR_CPF);
-	puts("\n");
 
-	puts("É doscente? (S - Sim | N - Sim): ");
+	puts("\nÉ doscente? (S - Sim | N - Sim): ");
 	switch (input_char_non_canon()) {
 	case 'S':
 	case 's':
@@ -40,13 +38,11 @@ void input_individuo(individuo* lista, int index) {
 		lista[index].eh_doscente = false;
 		break;
 	}
-	puts("\n");
 
-	puts("Digite seu gênero (M - masculino | F - feminino) ");
+	puts("\nDigite seu gênero (M - masculino | F - feminino) ");
 	lista[index].genero = input_char_non_canon();
-	puts("\n");
 
-	puts("Digite sua data de nascimento (DDMMAAAA): ");
+	puts("\nDigite sua data de nascimento (DDMMAAAA): ");
 	int data;
 	scanf_limpo_simples("%d", &data);
 	puts("\n");
