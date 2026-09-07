@@ -4,65 +4,81 @@
 #include "../headers/utilidades.h"
 
 void cadastrar(void* lista, int index, uint8_t tipo) {
-	if (index / ANO_ATUAL) {
-		index %= ANO_ATUAL;
-	}
-	switch (tipo) {
-	case INDIVIDUO:
-		input_individuo((individuo*)lista, index);
-		break;
-	case DISCIPLINA:
-		//input_disciplina((disciplina*)lista, index);
-		break;
+	if (index / ANO_ATUAL) index %= ANO_ATUAL;
 
+	if (index == LISTA_CHEIA) {
+		printf("A lista está cheia!\n");
+		return;
+	};
+
+	if (tipo == INDIVIDUO) {
+		individuo* buff_l = (individuo*)lista;
+		input_individuo(&buff_l[index], index);
+	}
+	if (tipo == DISCIPLINA) {
+		disciplina* buff_l = (disciplina*)lista;
+		//input_disciplina((disciplina*)lista, index);
 	}
 
 }
 
-void input_individuo(individuo* lista, int index) {
+void input_individuo(individuo* pessoa, int index) {
 	puts("Digite seu nome: ");
-	input_string(lista[index].nome, 40);
+	input_string(pessoa->nome, 40);
 
 	puts("\n\nDigite seu CPF (111.111.111-11): ");
-	input_string(lista[index].cpf, MAX_CHAR_CPF);
+	input_string(pessoa->cpf, MAX_CHAR_CPF);
 
 	puts("\nÉ doscente? (S - Sim | N - Sim): ");
 	switch (input_char_non_canon()) {
 	case 'S':
 	case 's':
-		lista[index].eh_doscente = true;
+		pessoa->eh_doscente = true;
 		break;
 
 	case 'N':
 	case 'n':
-		lista[index].eh_doscente = false;
+		pessoa->eh_doscente = false;
 		break;
 	}
 
 	puts("\nDigite seu gênero (M - masculino | F - feminino) ");
-	lista[index].genero = input_char_non_canon();
+	switch (input_char_non_canon()) {
+	case 'M':
+	case 'm':
+		pessoa->genero = 'M';
+		break;
 
-	puts("\nDigite sua data de nascimento (DDMMAAAA): ");
+	case 'F':
+	case 'f':
+		pessoa->genero = 'F';
+		break;
+	}
+
+	puts("\nDigite sua data de data (DDMMAAAA): ");
 	int data;
 	scanf_limpo_simples("%d", &data);
 	puts("\n");
 
-	lista[index].estado	= ATIVO;
-	lista[index].matricula	= (2026 * 10000) + index;
+	pessoa->estado		= ATIVO;
+	pessoa->matricula	= (2026 * 10000) + index;
 
-	lista[index].nascimento.ano = data % 10000;
-	lista[index].nascimento.mes = data % 1000000 / 10000;
-	lista[index].nascimento.dia = data / 1000000;
+	pessoa->data.ano		= data % 10000;
+	pessoa->data.mes		= (data % 1000000) / 10000;
+	pessoa->data.dia		= data / 1000000;
 
-	lista[index].n_disciplinas = 0;
+	pessoa->n_disciplinas	= 0;
 }
 
 void inicializar_lista(void* lista, size_t tam, uint8_t tipo) {
 	if (tipo == INDIVIDUO) {
 		individuo* ptr_lista = (individuo*)lista;
 
-		for (int i = 0; i < tam; ++i)
+		for (int i = 0; i < tam;) {
 			ptr_lista[i].estado = NAO_ATIVO;
+			++i;
+		}
+
 
 		return;
 	}
