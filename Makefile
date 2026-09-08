@@ -1,5 +1,5 @@
 CC      := gcc
-CFLAGS  := -Iheaders
+CFLAGS  := -Iheaders -Wall -Wextra
 SRCS    := $(wildcard src/*.c)
 OBJS    := $(SRCS:src/%.c=build/%.o)
 TARGET  := build/app
