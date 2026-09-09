@@ -16,8 +16,8 @@ void cadastrar(void* lista, int index, uint8_t tipo) {
 		input_individuo(&buff_l[index], index);
 	}
 	if (tipo == DISCIPLINA) {
-		disciplina* buff_l = (disciplina*)lista;
-		//input_disciplina((disciplina*)lista, index);
+		// disciplina* buff_l = (disciplina*)lista;
+		// input_disciplina((disciplina*)lista, index);
 	}
 
 }
@@ -60,8 +60,8 @@ void input_individuo(individuo* pessoa, int index) {
 	scanf_limpo_simples("%d", &data);
 	puts("\n");
 
-	pessoa->estado		= ATIVO;
-	pessoa->matricula	= (2026 * 10000) + index;
+	pessoa->estado			= ATIVO;
+	pessoa->matricula		= (2026 * 10000) + index;
 
 	pessoa->data.ano		= data % 10000;
 	pessoa->data.mes		= (data % 1000000) / 10000;
@@ -74,7 +74,7 @@ void inicializar_lista(void* lista, size_t tam, uint8_t tipo) {
 	if (tipo == INDIVIDUO) {
 		individuo* ptr_lista = (individuo*)lista;
 
-		for (int i = 0; i < tam;) {
+		for (size_t i = 0; i < tam;) {
 			ptr_lista[i].estado = NAO_ATIVO;
 			++i;
 		}
@@ -87,7 +87,7 @@ void inicializar_lista(void* lista, size_t tam, uint8_t tipo) {
 
 		disciplina* ptr_lista = (disciplina*)lista;
 
-		for (int i = 0; i < tam; ++i)
+		for (size_t i = 0; i < tam; ++i)
 			ptr_lista[i].estado = NAO_ATIVO;
 
 		return;
