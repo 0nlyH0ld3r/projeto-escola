@@ -18,11 +18,13 @@ void menuRelatorio(){
 	printf("MENU RELATÓRIO");
 }
 
+
+
 void menuv2(escola* escola, int debug){
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 	if(debug) printf("ENTROU MENU.\n\n");
-	//system("clear");
+	system("clear");
 	individuo lista_individuos[TAM_LISTA_ALUNOS];
 	disciplina lista_disciplinas[TAM_LISTA_DISCIPLINAS];
 
