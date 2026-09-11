@@ -4,7 +4,6 @@
 #include "../headers/escola.h"
 #include "../headers/relatorio.h"
 
-
 static void output_individuo(individuo buff_i);
 static void output_disciplina(disciplina buff_d);
 

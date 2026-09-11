@@ -71,27 +71,4 @@ void input_individuo(individuo* pessoa, int index) {
 	pessoa->n_disciplinas	= 0;
 }
 
-void inicializar_lista(void* lista, size_t tam, uint8_t tipo) {
-	if (tipo == INDIVIDUO) {
-		individuo* ptr_lista = (individuo*)lista;
-
-		for (size_t i = 0; i < tam;) {
-			ptr_lista[i].estado = NAO_ATIVO;
-			++i;
-		}
-
-
-		return;
-	}
-
-	else if (tipo == DISCIPLINA) {
-
-		disciplina* ptr_lista = (disciplina*)lista;
-
-		for (size_t i = 0; i < tam; ++i)
-			ptr_lista[i].estado = NAO_ATIVO;
-
-		return;
-	}
-}
 

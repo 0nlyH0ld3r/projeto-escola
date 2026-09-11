@@ -6,6 +6,7 @@
 #include <termios.h>
 
 
+
 void scanf_limpo_simples(char* format, void* variavel) {
 	if (compara_strings(format, "%d")) {
 		scanf("%d", (int *)variavel );
@@ -28,6 +29,13 @@ int compara_strings(const char* string1, const char* string2) {
 	return !strcmp(string1, string2);
 }
 
+
+#define func(ptr_1, ptr_2)		\
+	*ptr_1 = *ptr_2
+
+
+
+#ifdef MUDANDO_FUNCAO_PARA_MACRO
 int procura_vaga (const void* lista, size_t tam, uint8_t tipo) {
 	if (tipo == INDIVIDUO || tipo == INDIVIDUO) {
 		individuo* p = (individuo*)lista;
@@ -55,6 +63,7 @@ int procura_vaga (const void* lista, size_t tam, uint8_t tipo) {
 
 	return LISTA_CHEIA;
 }
+#endif
 
 	
 
@@ -72,3 +81,12 @@ int input_char_non_canon(void) {
 
 	return ch;
 }
+
+
+#define procura_vaga(lista, tam, resultado)		\
+	for (size_t i = 0; i < (tam); ++i) {		\
+		if ((lista)[i].matricula == NAO_ATIVO) {	\
+			(resultado) = i			\
+			break;				\
+		}					\
+	}

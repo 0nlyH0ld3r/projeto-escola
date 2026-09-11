@@ -48,7 +48,6 @@
 	 * para determinar se há ou não espaço para um novo Aluno/Professor ou Disciplina
 	 *
 	 */
-	int procura_vaga(const void* lista, size_t tam, uint8_t tipo);
 
 
 

@@ -129,7 +129,7 @@
 		char		codigo[MAX_CHAR_COD_DISCIPLINA];	// Código da disciplina. Ex: INF029
 		individuo*	professor;				// Ponteiro para Professor responsável
 		individuo*	alunos[MAX_NUMERO_ALUNOS_DISCIPLINA];	// Lista de alunos matriculados
-		char		estado;					// NAO_ATIVO <- Vaga livre pra uso
+		unsigned int	estado;					// NAO_ATIVO <- Vaga livre pra uso
 	};
 	
 
