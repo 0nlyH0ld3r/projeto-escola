@@ -40,26 +40,26 @@ int procura_vaga (const void* lista, size_t tam, uint8_t tipo) {
 	if (tipo == INDIVIDUO || tipo == INDIVIDUO) {
 		individuo* p = (individuo*)lista;
 
-		for (size_t i = 0; i < tam; ++i) {
-			if (p[i].matricula == NAO_ATIVO) {
-				return i;
-			}
-		}
-	}
+// 		for (size_t i = 0; i < tam; ++i) {
+// 			if (p[i].matricula == NAO_ATIVO) {
+// 				return i;
+// 			}
+// 		}
+// 	}
 
-	else if (tipo == DISCIPLINA || tipo == DISCIPLINA) {
-		disciplina* p = (disciplina*)lista;
+// 	else if (tipo == DISCIPLINA || tipo == DISCIPLINA) {
+// 		disciplina* p = (disciplina*)lista;
 
-		for (size_t i = 0; i < tam; ++i) {
-			if (p[i].codigo[0] == NAO_ATIVO) { 
-				return i;
-			}
-		}
-	}
+// 		for (size_t i = 0; i < tam; ++i) {
+// 			if (p[i].codigo[0] == NAO_ATIVO) { 
+// 				return i;
+// 			}
+// 		}
+// 	}
 
-	else {
-		return TIPO_INVALIDO;
-	}
+// 	else {
+// 		return TIPO_INVALIDO;
+// 	}
 
 	return LISTA_CHEIA;
 }
