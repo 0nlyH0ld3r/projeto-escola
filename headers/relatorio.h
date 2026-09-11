@@ -14,15 +14,15 @@
 	 * Em funções que recebam parâmetros do tipo ordenar (que seria uma função de 
 	 * ordenação), é possível passar NULL caso não deseje ordenar nada.
 	 */
-	typedef int (*ordenar_i)(individuo*, size_t);
-	typedef int (*ordenar_d)(disciplina*, size_t);
+	typedef size_t (*ordenar_i)(individuo*, size_t);
+	typedef size_t (*ordenar_d)(disciplina*, size_t);
 
 	# if ESTOU_COGITANDO_REMOVER_PARA_REDUZIR_A_COMPLEXIDADE
 	void listar(void* lista, size_t tamanho,ordenar ordenacao,
 		    uint8_t eh_doscente, uint8_t tipo);
 	#endif
 
-	void listar_individuos(individuo* lista, size_t tamanho, ordenar_i ordenacao, uint8_t eh_doscente);
+	void listar_individuos(individuo* lista, size_t tamanho, ordenar_i ordenacao, cargo eh_doscente);
 
 	void listar_disciplinas(disciplina* lista, size_t tam, ordenar_d ord);
 

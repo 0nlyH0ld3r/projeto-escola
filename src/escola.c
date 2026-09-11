@@ -3,6 +3,7 @@
 #include "../headers/escola.h"
 #include "../headers/utilidades.h"
 
+#if DIVIDIR_EM_DUAS_FUNÇÕES
 void cadastrar(void* lista, int index, uint8_t tipo) {
 	if (index / ANO_ATUAL) index %= ANO_ATUAL;
 
@@ -21,7 +22,7 @@ void cadastrar(void* lista, int index, uint8_t tipo) {
 	}
 
 }
-
+#endif
 void input_individuo(individuo* pessoa, int index) {
 	puts("Digite seu nome: ");
 	input_string(pessoa->nome, 40);
@@ -33,12 +34,12 @@ void input_individuo(individuo* pessoa, int index) {
 	switch (input_char_non_canon()) {
 	case 'S':
 	case 's':
-		pessoa->eh_doscente = true;
+		pessoa->cargo = DOSCENTE;
 		break;
 
 	case 'N':
 	case 'n':
-		pessoa->eh_doscente = false;
+		pessoa->cargo = DISCENTE;
 		break;
 	}
 

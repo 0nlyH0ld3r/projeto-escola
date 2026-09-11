@@ -4,6 +4,7 @@
 #include "../headers/escola.h"
 #include "../headers/relatorio.h"
 
+
 static void output_individuo(individuo buff_i);
 static void output_disciplina(disciplina buff_d);
 
@@ -14,11 +15,11 @@ static void output_disciplina(disciplina buff_d);
 # if ESTOU_COGITANDO_REMOVER_PARA_REDUZIR_A_COMPLEXIDADE
 
 void listar(void* lista, size_t tamanho, ordenar_i ordenacao,
-		uint8_t eh_doscente, uint8_t tipo) {
+		uint8_t cargo, uint8_t tipo) {
 
 	switch (tipo) {
 		case INDIVIDUO:
-			listar_individuos((individuo*)lista, tamanho, ordenacao, eh_doscente);
+			listar_individuos((individuo*)lista, tamanho, ordenacao, cargo);
 			break;
 		case DISCIPLINA:
 			listar_disciplinas((disciplina*)lista, tamanho);
@@ -28,14 +29,14 @@ void listar(void* lista, size_t tamanho, ordenar_i ordenacao,
 
 #endif
 
-void listar_individuos(individuo* lista, size_t tam, ordenar_i ord, uint8_t eh_dos) {
+void listar_individuos(individuo* lista, size_t tam, ordenar_i ord, cargo cargo) {
 	individuo buff_lista[tam]; // Buffer para o sort da função ordenacao
 
 	memcpy(buff_lista, lista, sizeof(individuo) * tam);	// Copia os dados de lista em buff_lista
 
 	if (ord != NULL) tam = ord(buff_lista, tam);	// Passar NULL caso não deseje ordenar
 
-	switch (eh_dos) {
+	switch (cargo) {
 		case DOSCENTE:
 			puts("************************\n");
 			puts("**LISTA DE PROFESSORES**\n");
@@ -55,16 +56,16 @@ void listar_individuos(individuo* lista, size_t tam, ordenar_i ord, uint8_t eh_d
 	}
 
 	for (size_t i = 0; i < tam; ++i) {
-		if (eh_dos == AMBOS){ 
+		if (cargo == AMBOS){ 
 			output_individuo(buff_lista[i]); 
 		}
 
-		else if (eh_dos == DOSCENTE) {
-			if (buff_lista[i].eh_doscente == true) { output_individuo(buff_lista[i]); }
+		else if (cargo == DOSCENTE) {
+			if (buff_lista[i].cargo == DOSCENTE) { output_individuo(buff_lista[i]); }
 		}
 
-		else if (eh_dos == DISCENTE) {  
-			if (buff_lista[i].eh_doscente == false) { output_individuo(buff_lista[i]); }
+		else if (cargo == DISCENTE) {  
+			if (buff_lista[i].cargo == DISCENTE) { output_individuo(buff_lista[i]); }
 		}
 	}
 }
@@ -131,7 +132,7 @@ size_t ord_tres_disciplinas(individuo* buff_l, size_t tam) {
 		individuo tmp = buff_l[i];
 		size_t j = i;
 
-		if (tmp.n_disciplinas < 3 && tmp.eh_doscente == false) {
+		if (tmp.n_disciplinas < 3 && tmp.cargo == DISCENTE) {
 			while (tmp.n_disciplinas < buff_l[j-1].n_disciplinas && j > 0) {
 				buff_l[j] = buff_l[j - 1];
 				--j;
@@ -180,7 +181,7 @@ size_t aniversariantes(individuo* buff_l, size_t tam) {
 static void output_individuo(individuo pessoa) {
 	if (pessoa.estado == NAO_ATIVO) return;
 
-	if (pessoa.eh_doscente == true)	printf("Professor: %s\n", pessoa.nome);
+	if (pessoa.cargo == DOSCENTE)	printf("Professor: %s\n", pessoa.nome);
 	else				printf("Aluno: %s\n", pessoa.nome);
 
 	printf("CPF: %s\n", pessoa.cpf);
