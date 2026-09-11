@@ -1,46 +1,68 @@
 #ifndef _CONSTANTS
 #define _CONSTANTS
 
+#include <stdbool.h>
 #include <unistd.h>
 #include <stdint.h>
+
+
+	///MAXIMOS VALORES PARA TAMANHO DOS VETORES
+	#define DIGITOS_CPF 			15
+	#define MAX_ALUNOS_ESCOLA		5
+	#define MAX_DISCIPLINAS_ESCOLA		2
+	#define MAX_PROFESSORES_ESCOLA		2
+
+	#define MAX_CHAR_NOME			40
+	#define MAX_CHAR_COD_DISCIPLINA		6
+	#define MAX_CHAR_CPF			14
+
+	#define MAX_NUMERO_ALUNOS_DISCIPLINA	3
+	#define MAX_DISCIPLINAS_INDIVIDUO	2
 
 	// Definindo macros para true e false caso não estejam definidas
 	// usando #ifndef (if not defined).
 
-
-	enum Status {
-		LISTA_CHEIA	= -1,
-		TIPO_INVALIDO	= -2,
-		NAO_ATIVO	=  0,
-		ATIVO		=  1,
+	enum MenuRelatorio {
+		LISTA_ALUNO,
+		LISTA_DISC,
+		LISTA_PROF,
 	};
 
-	enum Cargo {
+	enum MenuAtualiza {
+		ATUALIZA_INDV,
+		ATUALIZA_DISC,
+	};
+
+	enum MenuCadastro {
+		CADASTRO_INDV,
+		CADASTRO_DISC,
+	};
+
+	enum MenuPrincipal {
+		SAIR, 
+		CADASTRO,
+		RELATORIO,
+	};
+
+	typedef enum Status {
+		TIPO_INVALIDO	= -2,
+		LISTA_CHEIA	= -1,
+		NAO_ATIVO	=  0,
+		ATIVO		=  1,
+	} status;
+
+	typedef enum Cargo {
 		DISCENTE	= 0,
 		DOSCENTE	= 1,
 		AMBOS		= 2,
-	};
+	} cargo;
 
-	enum Tipo {
-		INDIVIDUO	= 1,
-		DISCIPLINA	= 2,
-	};
+	typedef enum Genero {
+		FEMININO = 0,
+		MASCULINO = 1,
+	} genero;
 
-	///MAXIMOS VALORES PARA TAMANHO DOS VETORES
-	enum valores_maximos {
 
-		MAX_ALUNOS_ESCOLA		= 5,
-		MAX_DISCIPLINAS_ESCOLA		= 2,
-		MAX_PROFESSORES_ESCOLA		= 2,
-
-		MAX_CHAR_NOME			= 40,
-		MAX_CHAR_COD_DISCIPLINA		= 6,
-		MAX_CHAR_CPF			= 14,
-
-		MAX_NUMERO_ALUNOS_DISCIPLINA	= 3,
-		MAX_DISCIPLINAS_INDIVIDUO	= 2,
-
-	};
 
 	enum Ano {
 		ANO_ATUAL = 20260000,
@@ -77,7 +99,7 @@
 
 	// Struct para data (Dia, mês, ano)
 	typedef struct Data data;
-
+	
 	struct Data {
 		unsigned int	dia;
 		unsigned int	mes;
@@ -91,18 +113,16 @@
 	};
 
 	struct Individuo {
-		char		nome[MAX_CHAR_NOME];			// Nota: Não tentem escrever nada por cima disso.
-		disciplina*	disciplinas[MAX_DISCIPLINAS_INDIVIDUO];	// Lista de disciplinas do individuo.
+		char			nome[MAX_CHAR_NOME];			// Nota: Não tentem escrever nada por cima disso.
+		disciplina*		disciplinas[MAX_DISCIPLINAS_INDIVIDUO];	// Lista de disciplinas do individuo.
 		unsigned int	n_disciplinas;				// Número de disciplinas do individuo.
 		unsigned int	matricula;				// Matrícula. Também usa pro professor.
-		data		data;				// Data de data no padrão DDMMYY.
-		char		cpf[14];				// CPF do indivíduo.
-		char		genero;					// F | M  -> Feminino | Masculino.
-		unsigned int	eh_doscente;				// true -> Professor | false -> Aluno.
+		data			data;				// Data de data no padrão DDMMYY.
+		char			cpf[DIGITOS_CPF];				// CPF do indivíduo.
+		genero			genero;					// F | M  -> Feminino | Masculino.
+		cargo			cargo;				// true -> Professor | false -> Aluno.
 		unsigned int	estado;					// NAO_ATIVO <- Vaga livre pra uso
-		
 	};
-
 
 	struct Disciplina {
 		char		nome[MAX_CHAR_NOME];			// Nome da disciplina.
