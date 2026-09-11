@@ -27,4 +27,4 @@ int main(int argc){
     inicia_escola(false);
     return 0;
 }
-//
+

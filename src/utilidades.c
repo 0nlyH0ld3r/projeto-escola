@@ -56,6 +56,10 @@ int procura_vaga (const void* lista, size_t tam, uint8_t tipo) {
 	return LISTA_CHEIA;
 }
 
+void listar_generico(const void *vetor, size_t tam_elemento, size_t tam_vetor){
+	
+}
+
 int input_char_non_canon(void) {
 	struct termios old_t;
 	tcgetattr(STDIN_FILENO, &old_t);
