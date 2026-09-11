@@ -7,11 +7,6 @@
 	// Definindo macros para true e false caso não estejam definidas
 	// usando #ifndef (if not defined).
 
-	#ifndef _bool 
-	#define _bool
-		#define true	1 
-		#define false	0
-	#endif
 
 	enum Status {
 		LISTA_CHEIA	= -1,
