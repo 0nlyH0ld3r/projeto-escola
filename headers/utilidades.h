@@ -25,7 +25,7 @@
 	 * A depender do tipo especificado na formatação ("%d" ou "%f"), 
 	 * irá realizar um typecast no ponteiro vazio (variavel) para receber ou um integer ou um float.
 	 */
-	void scanf_limpo_simples(char* format, void* variavel);
+	void scanf_limpo(const char* format, void* variavel);
 
 	/** @brief Encontra espaço vazio em uma lista de tamanho t
 	 *
@@ -68,5 +68,13 @@
 	 *
 	 */
 	int input_char_non_canon(void);
+
+	#define procura_vaga(lista, tam, resultado)			\
+		for (size_t i = 0; i < (tam); ++i) {			\
+			if ((lista)[i].estado == NAO_ATIVO) {	\
+				(resultado) = i;			\
+				break;					\
+			}						\
+		}
 
 #endif

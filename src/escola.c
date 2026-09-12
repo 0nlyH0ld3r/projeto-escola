@@ -23,7 +23,22 @@ void cadastrar(void* lista, int index, uint8_t tipo) {
 
 }
 #endif
-void input_individuo(individuo* pessoa, int index) {
+
+
+void cadastro_individuo(individuo* lista, size_t tam) {
+	size_t index = 0;
+	procura_vaga(lista, tam, index);
+	input_individuo(&lista[index]);
+}
+void cadastro_disciplina(disciplina* lista, size_t tam) {
+	size_t index = 0;
+	procura_vaga(lista, tam, index);
+	input_disciplina(&lista[index]);
+}
+
+
+void input_individuo(individuo* pessoa) {
+	static int primeiros_digitos = 0;
 	puts("Digite seu nome: ");
 	input_string(pessoa->nome, 40);
 
@@ -58,17 +73,27 @@ void input_individuo(individuo* pessoa, int index) {
 
 	puts("\nDigite sua data de data (DDMMAAAA): ");
 	int data;
-	scanf_limpo_simples("%d", &data);
+	scanf_limpo("%d", &data);
 	puts("\n");
 
 	pessoa->estado			= ATIVO;
-	pessoa->matricula		= (2026 * 10000) + index;
+	pessoa->matricula		= (2026 * 10000) + primeiros_digitos;
 
 	pessoa->data.ano		= data % 10000;
 	pessoa->data.mes		= (data % 1000000) / 10000;
 	pessoa->data.dia		= data / 1000000;
 
 	pessoa->n_disciplinas	= 0;
+	++primeiros_digitos;
+}
+
+void input_disciplina(disciplina* pessoa) {
+	puts("Digite o nome da disciplina: ");
+	input_string(pessoa->nome, MAX_CHAR_NOME);
+	// pessoa->professor;
+	puts("\nDigite o código da disciplina (ex: INF029): ");
+	input_string(pessoa->codigo, MAX_CHAR_COD_DISCIPLINA);
+	puts("\n");
 }
 
 
