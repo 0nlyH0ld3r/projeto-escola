@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "../headers/constants.h"
 #include "../headers/escola.h"
+#include "../headers/relatorio.h"
 #include "../headers/utilidades.h"
 
 #if DIVIDIR_EM_DUAS_FUNÇÕES
@@ -30,10 +31,12 @@ void cadastro_individuo(individuo* lista, size_t tam) {
 	procura_vaga(lista, tam, index);
 	input_individuo(&lista[index]);
 }
-void cadastro_disciplina(disciplina* lista, size_t tam) {
+void cadastro_disciplina(disciplina* lista, individuo* lista_prof, size_t tam) {
 	size_t index = 0;
+
 	procura_vaga(lista, tam, index);
-	input_disciplina(&lista[index]);
+	input_disciplina(&lista[index], lista_prof);
+
 }
 
 
@@ -87,12 +90,36 @@ void input_individuo(individuo* pessoa) {
 	++primeiros_digitos;
 }
 
-void input_disciplina(disciplina* pessoa) {
+void input_disciplina(disciplina* disciplina, individuo* lista_prof) {
 	puts("Digite o nome da disciplina: ");
-	input_string(pessoa->nome, MAX_CHAR_NOME);
+	input_string(disciplina->nome, MAX_CHAR_NOME);
 	// pessoa->professor;
 	puts("\nDigite o código da disciplina (ex: INF029): ");
-	input_string(pessoa->codigo, MAX_CHAR_COD_DISCIPLINA);
+	input_string(disciplina->codigo, MAX_CHAR_COD_DISCIPLINA);
+
+	puts("\nAperte qualquer tecla para entrar no menu de seleção do professor: ");
+	input_char_non_canon();
+
+	disciplina->estado			= ATIVO;
+	unsigned int matricula;
+
+	listar_individuos(lista_prof, MAX_ALUNOS_ESCOLA, NULL, DOSCENTE);
+
+
+
+	do { 
+		puts("\nSelecione o professor pela matrícula: ");
+		scanf_limpo("%u", &matricula);
+
+		disciplina->professor = busca_matricula(lista_prof, 3, matricula);
+
+		if (disciplina->professor != NULL) break;
+
+		puts("\nDigite a matrícula válida de um professor!");
+
+	} while(1);
+
+	listar_disciplinas(disciplina, 1, NULL);
 	puts("\n");
 }
 

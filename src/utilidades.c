@@ -15,8 +15,24 @@ void scanf_limpo(const char* format, void* variavel) {
 		scanf("%f", (float*)variavel );
 	}
 
+	else if (compara_strings(format, "%u")) {
+		scanf("%d", (unsigned int*)variavel);
+	}
+
 	int c;
-	do { c = getchar(); } while (  c!= '\n' && c != EOF );
+	while ((c = getchar()) != '\n' && c != EOF );
+}
+
+individuo* busca_matricula(individuo* lista, size_t tam, unsigned int matricula) {
+	for (register size_t i = 0; i < tam; ++i) {
+		if (lista->matricula == matricula) {
+			return lista;
+		}
+
+		++lista;
+	}
+
+	return NULL;
 }
 
 void input_string(char* string, size_t tam) {

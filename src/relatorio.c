@@ -53,6 +53,7 @@ void listar_individuos(individuo* lista, size_t tam, ordenar_i ord, cargo cargo)
 }
 
 void listar_disciplinas(disciplina* lista, size_t tam, ordenar_d ord) {
+
 	disciplina buff_l[tam];
 
 	memcpy(buff_l, lista, sizeof(disciplina) * tam);

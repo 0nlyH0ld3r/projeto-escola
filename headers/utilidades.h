@@ -69,6 +69,8 @@
 	 */
 	int input_char_non_canon(void);
 
+	individuo* busca_matricula(individuo* lista, size_t tam, unsigned int matricula);
+
 	#define procura_vaga(lista, tam, resultado)			\
 		for (size_t i = 0; i < (tam); ++i) {			\
 			if ((lista)[i].estado == NAO_ATIVO) {	\
