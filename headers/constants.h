@@ -8,9 +8,8 @@
 
 	///MAXIMOS VALORES PARA TAMANHO DOS VETORES
 	#define DIGITOS_CPF 					20
-	#define MAX_ALUNOS_ESCOLA				5
+	#define MAX_PESSOAS_ESCOLA				5
 	#define MAX_DISCIPLINAS_ESCOLA			2
-	#define MAX_PROFESSORES_ESCOLA			2
 
 	#define MAX_CHAR_NOME					100
 	#define MAX_CHAR_COD_DISCIPLINA			8
@@ -106,8 +105,8 @@
 
 	struct Escola {
 		disciplina*	disciplinas[MAX_DISCIPLINAS_ESCOLA];
-		individuo*	professores[MAX_PROFESSORES_ESCOLA];
-		individuo*	alunos[MAX_ALUNOS_ESCOLA];
+		individuo*	professores[MAX_PESSOAS_ESCOLA];
+		individuo*	alunos[MAX_PESSOAS_ESCOLA];
 	};
 
 	struct Individuo {
