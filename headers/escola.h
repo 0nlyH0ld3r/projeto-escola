@@ -1,5 +1,4 @@
 #include "constants.h"
-#include <stdint.h>
 
 
 #ifndef _ESCOLA

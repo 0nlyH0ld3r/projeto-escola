@@ -1,20 +1,7 @@
-#include <stdio.h>
 #include "../headers/constants.h"
 #include "../headers/escola.h"
 #include "../headers/relatorio.h"
 #include "../headers/utilidades.h"
-
-// TODO: Mover isso pra constants.h
-enum opcoes_cadastro_atualizar {
-	GERAL,
-	NOME,
-	CPF,
-	CARGO,
-	GENERO,
-	DATA,
-	CODIGO,
-	PROFESSOR,
-};
 
 void cadastro_individuo(individuo* lista, size_t tam) {
 	size_t index = 0;

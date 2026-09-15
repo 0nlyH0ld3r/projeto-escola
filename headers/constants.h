@@ -1,6 +1,8 @@
 #ifndef _CONSTANTS
 #define _CONSTANTS
 
+#include <string.h>
+#include <time.h>
 #include <stdbool.h>
 #include <unistd.h>
 #include <stdint.h>
