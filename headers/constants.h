@@ -18,6 +18,17 @@
 	#define MAX_NUMERO_ALUNOS_DISCIPLINA	3
 	#define MAX_DISCIPLINAS_INDIVIDUO		2
 
+	enum opcoes_cadastro_atualizar {
+		GERAL,
+		NOME,
+		CPF,
+		CARGO,
+		GENERO,
+		DATA,
+		CODIGO,
+		PROFESSOR,
+	};
+
 	enum MenuRelatorio {
 		LISTA_ALUNO,
 		LISTA_DISC,
