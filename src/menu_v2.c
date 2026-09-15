@@ -1,16 +1,12 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <sys/ioctl.h>
+#include "../headers/menu_v2.h"
 #include "../headers/utilidades.h"
 #include "../headers/relatorio.h"
 #include "../headers/escola.h"
-#include "../headers/constants.h"
 
 #define TAM_LISTA_ALUNOS 5
 #define TAM_LISTA_DISCIPLINAS 3
 #define QNT_LINHAS_MENU 10
+
 static int contaLinhas = 0;
 
 void menuCadastro(void){
@@ -22,18 +18,18 @@ void menuRelatorio(void){
 }
 
 void printaMenu(struct winsize *w){
-	for(int i =0; i<w->ws_col;i++) printCotabilizado("*");
-    printCotabilizado("\n");
+	for(int i =0; i<w->ws_col;i++) printContabilizado("*");
+    printContabilizado("\n");
 
-	printCotabilizado("Digite a opção: \n");
-	printCotabilizado("\t0 - Sair \n");
-	printCotabilizado("\t1 - Inserir \n");
-	printCotabilizado("\t2 - Listar \n");
-	printCotabilizado("\t3 - Atualizar \n");
-	printCotabilizado("\t4 - Deletar \n");
-	
-    for(int i =0; i<w->ws_col;i++) printCotabilizado("*");
-    printCotabilizado("\n");
+	printContabilizado("Digite a opção: \n");
+	printContabilizado("\t0 - Sair \n");
+	printContabilizado("\t1 - Inserir \n");
+	printContabilizado("\t2 - Listar \n");
+	printContabilizado("\t3 - Atualizar \n");
+	printContabilizado("\t4 - Deletar \n");
+
+    for(int i =0; i<w->ws_col;i++) printContabilizado("*");
+    printContabilizado("\n");
 
 }
 
@@ -41,7 +37,7 @@ void apagaLinhaMenu(int linhasParaApagar){
 	for(int i = 0; i< linhasParaApagar; i++)printf("\033[A\33[2K");
 }
 
-void printCotabilizado(const char *str, ...){
+void printContabilizado(const char *str, ...){
 	for(int i =0; str[i] != '\0'; i++){
 		if(str[i] == '\n') contaLinhas++;
 		fprintf(stdout, str);
@@ -54,6 +50,7 @@ void printCotabilizado(const char *str, ...){
 
 	fflush(stdout);
 }
+
 void menuv2(escola* escola, int debug){
 	if(debug) printf("ENTROU MENU.\n\n"); else system("clear");
 
@@ -68,7 +65,7 @@ void menuv2(escola* escola, int debug){
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &janela);
 
 	printaMenu(&janela);
-    scanf_limpo_simples("%d", &opcaoMenu);
+    scanf_limpo("%d", &opcaoMenu);
 
     /*
 	while(SAIR){ //sair == 0
