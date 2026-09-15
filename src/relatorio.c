@@ -1,17 +1,12 @@
-#include <stdio.h>
-#include <string.h>
-#include <time.h>
 #include "../headers/escola.h"
 #include "../headers/relatorio.h"
-
-static void output_individuo(individuo buff_i);
-static void output_disciplina(disciplina buff_d);
 
 // 
 // Funções de listagem
 //
 
-void listar_individuos(individuo* lista, size_t tam, ordenar_i ord, cargo cargo) {
+void listar_individuos(individuo* lista, ordenar_i ord, cargo cargo) {
+	size_t tam = MAX_PESSOAS_ESCOLA;
 	individuo buff_lista[tam]; // Buffer para o sort da função ordenacao
 
 	memcpy(buff_lista, lista, sizeof(individuo) * tam);	// Copia os dados de lista em buff_lista
@@ -52,7 +47,8 @@ void listar_individuos(individuo* lista, size_t tam, ordenar_i ord, cargo cargo)
 	}
 }
 
-void listar_disciplinas(disciplina* lista, size_t tam, ordenar_d ord) {
+void listar_disciplinas(disciplina* lista, ordenar_d ord) {
+	size_t tam = MAX_DISCIPLINAS_ESCOLA;
 
 	disciplina buff_l[tam];
 
@@ -160,26 +156,39 @@ size_t aniversariantes(individuo* buff_l, size_t tam) {
 // Funções de output
 //
 
-static void output_individuo(individuo pessoa) {
+void output_individuo(individuo pessoa, int geral) {
 	if (pessoa.estado == NAO_ATIVO) return;
 
 	if (pessoa.cargo == DOSCENTE)	printf("Professor: %s\n", pessoa.nome);
 	else				printf("Aluno: %s\n", pessoa.nome);
 
-	printf("CPF: %s\n", pessoa.cpf);
-	printf("Data de Nascimento: %2d/%2d/%4d\n", pessoa.data.dia,
-			   	   pessoa.data.mes, pessoa.data.ano);
+	if (geral == true) {
+		printf("CPF: %s\n", pessoa.cpf);
+		printf("Data de Nascimento: %2d/%2d/%4d\n", pessoa.data.dia,
+				pessoa.data.mes, pessoa.data.ano);
+		printf("Gênero: %s\n", pessoa.genero == 'M' ? "Masculino" : "Feminino");
+		printf("Número de disciplinas: %d\n\n\n", pessoa.n_disciplinas);
+	}
+	else {
+		puts("\n\n");
+	}
 
-	printf("Gênero: %s\n", pessoa.genero == 'M' ? "Masculino" : "Feminino");
 	printf("Matricula: %d\n", pessoa.matricula);
-	printf("Número de disciplinas: %d\n\n\n", pessoa.n_disciplinas);
 
 }
 
-static void output_disciplina(disciplina disciplina) {
+void output_disciplina(disciplina disciplina, int geral) {
 	if (disciplina.estado == NAO_ATIVO) return;
 
 	printf("Disciplina: %s\n", disciplina.nome);
 	printf("Código: %s\n", disciplina.codigo);
+
+	if (geral == true) {
+	printf("Semestre> %u\n", disciplina.semestre);
 	printf("Doscente responsável: %s\n\n\n", disciplina.professor->nome);
+	// TODO: Printar os alunos
+	}
+	else {
+		puts("\n\n");
+	}
 }

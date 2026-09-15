@@ -22,11 +22,17 @@
 		    uint8_t eh_doscente, uint8_t tipo);
 	#endif
 
-	void listar_individuos(individuo* lista, size_t tamanho, ordenar_i ordenacao, cargo cargo);
+	void listar_individuos(individuo* lista, ordenar_i ordenacao, cargo cargo);
 
-	void listar_disciplinas(disciplina* lista, size_t tam, ordenar_d ord);
+	void listar_disciplinas(disciplina* lista, ordenar_d ord);
+
+	void output_individuo(individuo pessoa, int opcao);
+
+	void output_disciplina(disciplina disciplina, int opcao);
 
 	size_t ord_data(individuo* buff_l, size_t tam);
 
-	size_t ord_tres_disciplinas(individuo* buff_l, size_t tam);
+	size_t ord_tres_disciplinas(individuo* buff_, size_t taml);
+
+	size_t aniversariantes(individuo* buff_l, size_t tam);
 #endif

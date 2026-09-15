@@ -3,13 +3,15 @@
 #include "../headers/relatorio.h"
 #include "../headers/utilidades.h"
 
-void cadastro_individuo(individuo* lista, size_t tam) {
+void cadastro_individuo(individuo* lista) {
+	size_t tam = MAX_PESSOAS_ESCOLA;
 	size_t index = 0;
 	procura_vaga(lista, tam, index);
 	input_individuo(&lista[index], GERAL);
 }
 
-void cadastro_disciplina(disciplina* lista, individuo* lista_prof, size_t tam) {
+void cadastro_disciplina(disciplina* lista, individuo* lista_prof) {
+	size_t tam = MAX_DISCIPLINAS_ESCOLA;
 	size_t index = 0;
 
 	procura_vaga(lista, tam, index);
@@ -149,6 +151,10 @@ void input_disciplina(disciplina* disciplina, individuo* lista_prof, int opcao) 
 		input_string(disciplina->codigo, MAX_CHAR_COD_DISCIPLINA);
 		if (opcao != GERAL) break;
 
+	case SEMESTRE:
+		puts("\nDigite em qual semestre essa disciplina é obrigatória: ");
+		scanf_limpo("%u", &disciplina->semestre);
+
 	case PROFESSOR:
 		puts("\nAperte qualquer tecla para entrar no menu de seleção do professor responsável: ");
 		input_char_non_canon();
@@ -156,7 +162,9 @@ void input_disciplina(disciplina* disciplina, individuo* lista_prof, int opcao) 
 		disciplina->estado			= ATIVO;
 		unsigned int matricula;
 
-		listar_individuos(lista_prof, MAX_PESSOAS_ESCOLA, NULL, DOSCENTE);
+		for (size_t i = 0; i < MAX_PESSOAS_ESCOLA; ++i)
+			if (lista_prof[i].cargo == DOSCENTE)
+				output_individuo(lista_prof[i]);
 
 		do { 
 			puts("\nSelecione o professor pela matrícula: ");
@@ -170,7 +178,7 @@ void input_disciplina(disciplina* disciplina, individuo* lista_prof, int opcao) 
 
 		} while(1);
 
-		listar_disciplinas(disciplina, 1, NULL);
+		output_disciplina(*disciplina);
 		puts("\n");
 		break;
 	}

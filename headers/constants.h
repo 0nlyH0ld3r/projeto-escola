@@ -34,6 +34,7 @@
 		DATA,
 		CODIGO,
 		PROFESSOR,
+		SEMESTRE,
 	};
 
 	enum MenuRelatorio {
@@ -142,6 +143,7 @@
 	struct Disciplina {
 		char		nome[MAX_CHAR_NOME];			// Nome da disciplina.
 		char		codigo[MAX_CHAR_COD_DISCIPLINA];	// Código da disciplina. Ex: INF029
+		unsigned int	semestre;				// Semestre da disciplina
 		individuo*	professor;				// Ponteiro para Professor responsável
 		individuo*	alunos[MAX_NUMERO_ALUNOS_DISCIPLINA];	// Lista de alunos matriculados
 		unsigned int	estado;					// NAO_ATIVO <- Vaga livre pra uso
