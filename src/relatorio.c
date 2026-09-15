@@ -11,23 +11,6 @@ static void output_disciplina(disciplina buff_d);
 // Funções de listagem
 //
 
-# if ESTOU_COGITANDO_REMOVER_PARA_REDUZIR_A_COMPLEXIDADE
-
-void listar(void* lista, size_t tamanho, ordenar_i ordenacao,
-		uint8_t cargo, uint8_t tipo) {
-
-	switch (tipo) {
-		case INDIVIDUO:
-			listar_individuos((individuo*)lista, tamanho, ordenacao, cargo);
-			break;
-		case DISCIPLINA:
-			listar_disciplinas((disciplina*)lista, tamanho);
-			break;
-	}
-}
-
-#endif
-
 void listar_individuos(individuo* lista, size_t tam, ordenar_i ord, cargo cargo) {
 	individuo buff_lista[tam]; // Buffer para o sort da função ordenacao
 
@@ -69,8 +52,8 @@ void listar_individuos(individuo* lista, size_t tam, ordenar_i ord, cargo cargo)
 	}
 }
 
-
 void listar_disciplinas(disciplina* lista, size_t tam, ordenar_d ord) {
+
 	disciplina buff_l[tam];
 
 	memcpy(buff_l, lista, sizeof(disciplina) * tam);
@@ -125,15 +108,15 @@ size_t ord_data(individuo* buff_l, size_t tam) {
 	return tam;
 }
 
-size_t ord_tres_disciplinas(individuo* buff_l, size_t tam) {
+size_t ord_tres_disciplinas(individuo* buff_a, size_t tam) { // Ordenação exclusiva de alunos
 	size_t count = 0;
 	for (size_t i = 1; i < tam; ++i) {
-		individuo tmp = buff_l[i];
+		individuo tmp = buff_a[i];
 		size_t j = i;
 
 		if (tmp.n_disciplinas < 3 && tmp.cargo == DISCENTE) {
-			while (tmp.n_disciplinas < buff_l[j-1].n_disciplinas && j > 0) {
-				buff_l[j] = buff_l[j - 1];
+			while (tmp.n_disciplinas < buff_a[j-1].n_disciplinas && j > 0) {
+				buff_a[j] = buff_a[j - 1];
 				--j;
 
 				continue;
@@ -142,7 +125,7 @@ size_t ord_tres_disciplinas(individuo* buff_l, size_t tam) {
 			++count;
 		}
 
-		buff_l[j] = tmp;
+		buff_a[j] = tmp;
 	}
 
 	return count;

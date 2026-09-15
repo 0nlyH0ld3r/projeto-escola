@@ -6,18 +6,33 @@
 #include <termios.h>
 
 
-
-void scanf_limpo_simples(char* format, void* variavel) {
+void scanf_limpo(const char* format, void* variavel) {
 	if (compara_strings(format, "%d")) {
-		scanf("%d", (int *)variavel );
+		scanf("%d", (int*)variavel );
 	}
 
 	else if (compara_strings(format, "%f")) {
-		scanf("%f", (float *)variavel );
+		scanf("%f", (float*)variavel );
+	}
+
+	else if (compara_strings(format, "%u")) {
+		scanf("%d", (unsigned int*)variavel);
 	}
 
 	int c;
-	do { c = getchar(); } while (  c!= '\n' && c != EOF );
+	while ((c = getchar()) != '\n' && c != EOF );
+}
+
+individuo* busca_matricula(individuo* lista, size_t tam, unsigned int matricula) {
+	for (register size_t i = 0; i < tam; ++i) {
+		if (lista->matricula == matricula) {
+			return lista;
+		}
+
+		++lista;
+	}
+
+	return NULL;
 }
 
 void input_string(char* string, size_t tam) {
@@ -28,44 +43,6 @@ void input_string(char* string, size_t tam) {
 int compara_strings(const char* string1, const char* string2) {
 	return !strcmp(string1, string2);
 }
-
-
-#define func(ptr_1, ptr_2)		\
-	*ptr_1 = *ptr_2
-
-
-
-#ifdef MUDANDO_FUNCAO_PARA_MACRO
-int procura_vaga (const void* lista, size_t tam, uint8_t tipo) {
-	if (tipo == INDIVIDUO || tipo == INDIVIDUO) {
-		individuo* p = (individuo*)lista;
-
-// 		for (size_t i = 0; i < tam; ++i) {
-// 			if (p[i].matricula == NAO_ATIVO) {
-// 				return i;
-// 			}
-// 		}
-// 	}
-
-// 	else if (tipo == DISCIPLINA || tipo == DISCIPLINA) {
-// 		disciplina* p = (disciplina*)lista;
-
-// 		for (size_t i = 0; i < tam; ++i) {
-// 			if (p[i].codigo[0] == NAO_ATIVO) { 
-// 				return i;
-// 			}
-// 		}
-// 	}
-
-// 	else {
-// 		return TIPO_INVALIDO;
-// 	}
-
-	return LISTA_CHEIA;
-}
-#endif
-
-	
 
 int input_char_non_canon(void) {
 	struct termios old_t;
@@ -83,10 +60,3 @@ int input_char_non_canon(void) {
 }
 
 
-#define procura_vaga(lista, tam, resultado)		\
-	for (size_t i = 0; i < (tam); ++i) {		\
-		if ((lista)[i].matricula == NAO_ATIVO) {	\
-			(resultado) = i			\
-			break;				\
-		}					\
-	}

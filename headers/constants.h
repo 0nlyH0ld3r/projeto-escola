@@ -7,39 +7,40 @@
 
 
 	///MAXIMOS VALORES PARA TAMANHO DOS VETORES
-	#define DIGITOS_CPF 					15
-	#define MAX_ALUNOS_ESCOLA				5
+	#define DIGITOS_CPF 					20
+	#define MAX_PESSOAS_ESCOLA				5
 	#define MAX_DISCIPLINAS_ESCOLA			2
-	#define MAX_PROFESSORES_ESCOLA			2
 
-	#define MAX_CHAR_NOME					40
-	#define MAX_CHAR_COD_DISCIPLINA			6
+	#define MAX_CHAR_NOME					100
+	#define MAX_CHAR_COD_DISCIPLINA			8
 	#define MAX_CHAR_CPF					14
 
 	#define MAX_NUMERO_ALUNOS_DISCIPLINA	3
 	#define MAX_DISCIPLINAS_INDIVIDUO		2
 
-	// Definindo macros para true e false caso não estejam definidas
-	// usando #ifndef (if not defined).
-	enum MenuRelatorio{
+	enum MenuRelatorio {
 		LISTA_ALUNO,
 		LISTA_DISC,
 		LISTA_PROF,
 	};
-	enum MenuAtualiza{
+
+	enum MenuAtualiza {
 		ATUALIZA_INDV,
 		ATUALIZA_DISC,
 	};
-	enum MenuCadastro{
+
+	enum MenuCadastro {
 		CADASTRO_INDV,
 		CADASTRO_DISC,
 		ATUALIZA,
 	};
-	enum MenuPrincipal{
+
+	enum MenuPrincipal {
 		SAIR, 
 		CADASTRO,
 		RELATORIO,
 	};
+
 	typedef enum Status {
 		TIPO_INVALIDO	= -2,
 		LISTA_CHEIA	= -1,
@@ -104,8 +105,8 @@
 
 	struct Escola {
 		disciplina*	disciplinas[MAX_DISCIPLINAS_ESCOLA];
-		individuo*	professores[MAX_PROFESSORES_ESCOLA];
-		individuo*	alunos[MAX_ALUNOS_ESCOLA];
+		individuo*	professores[MAX_PESSOAS_ESCOLA];
+		individuo*	alunos[MAX_PESSOAS_ESCOLA];
 	};
 
 	struct Individuo {

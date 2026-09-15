@@ -22,7 +22,7 @@
 		    uint8_t eh_doscente, uint8_t tipo);
 	#endif
 
-	void listar_individuos(individuo* lista, size_t tamanho, ordenar_i ordenacao, cargo eh_doscente);
+	void listar_individuos(individuo* lista, size_t tamanho, ordenar_i ordenacao, cargo cargo);
 
 	void listar_disciplinas(disciplina* lista, size_t tam, ordenar_d ord);
 
