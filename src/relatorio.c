@@ -34,15 +34,15 @@ void listar_individuos(individuo* lista, ordenar_i ord, cargo cargo) {
 
 	for (size_t i = 0; i < tam; ++i) {
 		if (cargo == AMBOS){ 
-			output_individuo(buff_lista[i]); 
+			output_individuo(buff_lista[i], true); 
 		}
 
 		else if (cargo == DOSCENTE) {
-			if (buff_lista[i].cargo == DOSCENTE) { output_individuo(buff_lista[i]); }
+			if (buff_lista[i].cargo == DOSCENTE) { output_individuo(buff_lista[i], true); }
 		}
 
 		else if (cargo == DISCENTE) {  
-			if (buff_lista[i].cargo == DISCENTE) { output_individuo(buff_lista[i]); }
+			if (buff_lista[i].cargo == DISCENTE) { output_individuo(buff_lista[i], true); }
 		}
 	}
 }
@@ -62,7 +62,7 @@ void listar_disciplinas(disciplina* lista, ordenar_d ord) {
 	for (size_t i = 0; i < tam; ++i) {
 		if (buff_l[i].estado == NAO_ATIVO) continue;
 
-		output_disciplina(buff_l[i]);
+		output_disciplina(buff_l[i], true);
 	}
 }
 
@@ -169,11 +169,8 @@ void output_individuo(individuo pessoa, int geral) {
 		printf("Gênero: %s\n", pessoa.genero == 'M' ? "Masculino" : "Feminino");
 		printf("Número de disciplinas: %d\n\n\n", pessoa.n_disciplinas);
 	}
-	else {
-		puts("\n\n");
-	}
 
-	printf("Matricula: %d\n", pessoa.matricula);
+	printf("Matricula: %d\n\n", pessoa.matricula);
 
 }
 
@@ -183,9 +180,10 @@ void output_disciplina(disciplina disciplina, int geral) {
 	printf("Disciplina: %s\n", disciplina.nome);
 	printf("Código: %s\n", disciplina.codigo);
 
+	printf("Doscente responsável: %s\n\n\n", disciplina.professor->nome);
+
 	if (geral == true) {
 	printf("Semestre> %u\n", disciplina.semestre);
-	printf("Doscente responsável: %s\n\n\n", disciplina.professor->nome);
 	// TODO: Printar os alunos
 	}
 	else {
