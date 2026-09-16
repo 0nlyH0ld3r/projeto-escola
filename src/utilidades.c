@@ -23,6 +23,29 @@ void scanf_limpo(const char* format, void* variavel) {
 	while ((c = getchar()) != '\n' && c != EOF );
 }
 
+int data_eh_valida(data data) {
+	if (data.dia > 31) return 0;
+	if (data.mes > 12) return 0;
+	if (data.ano > 2026) return 0;
+	if (data.dia > 28 && data.mes == 2 && !ano_eh_bissexto(data.ano)) return 0;
+	if (data.dia > 29 && data.mes == 2) return 0;
+	if (data.dia > 31 && !mes_31_dias(data.mes)) return 0;
+
+	return 1;
+}
+
+int mes_31_dias(unsigned int mes) {
+	if (mes == 4 || mes == 6 || mes == 9 || mes == 11) return 0;
+
+	return 1;
+}
+
+int ano_eh_bissexto(unsigned int ano) {
+	if ( (!(ano % 4) && (ano % 100)) || !(ano % 400) ) return 1;
+
+	return 1;
+} 
+
 individuo* busca_matricula(individuo* lista, size_t tam, unsigned int matricula) {
 	for (register size_t i = 0; i < tam; ++i) {
 		if (lista->matricula == matricula) {

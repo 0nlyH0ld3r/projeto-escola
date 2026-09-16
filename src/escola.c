@@ -110,12 +110,15 @@ void input_individuo(individuo* pessoa, int opcao) {
 
 	case DATA:
 		puts("\nDigite sua data de data (DDMMAAAA): ");
-		int data;
-		scanf_limpo("%d", &data);
+		do {
+			int data;
+			scanf_limpo("%d", &data);
 
-		pessoa->data.ano	= data % 10000;
-		pessoa->data.mes	= (data % 1000000) / 10000;
-		pessoa->data.dia	= data / 1000000;
+			pessoa->data.ano	= data % 10000;
+			pessoa->data.mes	= (data % 1000000) / 10000;
+			pessoa->data.dia	= data / 1000000;
+
+		} while (data_eh_valida(pessoa->data) == true);
 
 		if (opcao != GERAL) return;
 
@@ -124,7 +127,9 @@ void input_individuo(individuo* pessoa, int opcao) {
 	if (pessoa->estado == NAO_ATIVO){
 		pessoa->n_disciplinas	= 0;
 		pessoa->matricula = (2026 * 10000) + primeiros_digitos;
+
 		printf("\nSua matrícila é: %u\n", pessoa->matricula);
+
 		++primeiros_digitos;
 	}
 
@@ -164,7 +169,7 @@ void input_disciplina(disciplina* disciplina, individuo* lista_prof, int opcao) 
 
 		for (size_t i = 0; i < MAX_PESSOAS_ESCOLA; ++i)
 			if (lista_prof[i].cargo == DOSCENTE)
-				output_individuo(lista_prof[i]);
+				output_individuo(lista_prof[i], false);
 
 		do { 
 			puts("\nSelecione o professor pela matrícula: ");
@@ -178,7 +183,7 @@ void input_disciplina(disciplina* disciplina, individuo* lista_prof, int opcao) 
 
 		} while(1);
 
-		output_disciplina(*disciplina);
+		output_disciplina(*disciplina, false);
 		puts("\n");
 		break;
 	}

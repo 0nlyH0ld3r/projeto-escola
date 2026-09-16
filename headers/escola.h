@@ -11,7 +11,7 @@
 	void cadastro_disciplina(disciplina* lista, individuo* lista_prof);
 	void remover_disciplina(disciplina* pessoa);
 	void atualizar_disciplina(disciplina* disciplina, int opcao);
-	void input_disciplina(disciplina* lista, individuo* lista_prof, int opcao);
+void input_disciplina(disciplina* lista, individuo* lista_prof, int opcao);
 		
 	#define inicializar_lista(lista, tam)		\
 		for (size_t i = 0; i < tam; ++i){	\

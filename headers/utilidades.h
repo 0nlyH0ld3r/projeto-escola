@@ -71,6 +71,12 @@
 
 	individuo* busca_matricula(individuo* lista, size_t tam, unsigned int matricula);
 
+	int data_eh_valida(data data);
+
+	int ano_eh_bissexto(unsigned int ano);
+
+	int mes_31_dias(unsigned int mes);
+
 	#define procura_vaga(lista, tam, resultado)			\
 		for (size_t i = 0; i < (tam); ++i) {			\
 			if ((lista)[i].estado == NAO_ATIVO) {	\
