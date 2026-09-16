@@ -82,4 +82,24 @@ int input_char_non_canon(void) {
 	return ch;
 }
 
+int compara_nomes(const char* s1, const char* s2) {
+	size_t i = 0;
+	while (s1[i] == s2[i]) {
+		++i;
+	}
 
+	if (s1[i] < s2[i]) return true;
+
+
+	return false;
+}
+
+int inverter_data (data tmp) {
+	int data = 0;
+
+	data += tmp.dia * 1;
+	data += tmp.mes * 10000;
+	data += tmp.ano * 1000000;
+
+	return data;
+}

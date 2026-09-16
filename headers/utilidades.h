@@ -75,7 +75,12 @@
 
 	int ano_eh_bissexto(unsigned int ano);
 
+	int inverter_data (data tmp);
+
+	int compara_nomes(const char* s1, const char* s2);
+
 	int mes_31_dias(unsigned int mes);
+
 
 	#define procura_vaga(lista, tam, resultado)			\
 		for (size_t i = 0; i < (tam); ++i) {			\

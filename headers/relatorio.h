@@ -32,6 +32,8 @@
 
 	size_t ord_data(individuo* buff_l, size_t tam);
 
+	size_t ord_nome(individuo* buff_l, size_t tam);
+
 	size_t ord_tres_disciplinas(individuo* buff_, size_t taml);
 
 	size_t aniversariantes(individuo* buff_l, size_t tam);

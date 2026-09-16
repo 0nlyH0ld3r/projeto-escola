@@ -1,4 +1,5 @@
 #include "../headers/escola.h"
+#include "../headers/utilidades.h"
 #include "../headers/relatorio.h"
 
 // 
@@ -67,22 +68,6 @@ void listar_disciplinas(disciplina* lista, ordenar_d ord) {
 }
 
 //
-// Funções utilidades
-//
-
-
-
-int inverter_data (data tmp) {
-	int data = 0;
-
-	data += tmp.dia * 1;
-	data += tmp.mes * 10000;
-	data += tmp.ano * 1000000;
-
-	return data;
-}
-
-//
 // Funções de ordenação
 //
 
@@ -125,6 +110,24 @@ size_t ord_tres_disciplinas(individuo* buff_a, size_t tam) { // Ordenação excl
 	}
 
 	return count;
+}
+
+size_t ord_nome(individuo* buff_l, size_t tam) {
+	for (size_t i = 1; i < tam; ++i) {
+		char *tmp = buff_l[i].nome;
+		size_t j = i;
+
+		while(compara_nomes(tmp, buff_l[j-1].nome) == true && j > 0) {
+			memcpy(buff_l[j].nome, buff_l[j-1].nome, sizeof(buff_l[j].nome));
+			--j;
+
+			continue;
+		}
+
+		memcpy(buff_l[j-1].nome, tmp, sizeof(buff_l[j].nome));
+	}
+
+	return tam;
 }
 
 size_t aniversariantes(individuo* buff_l, size_t tam) {
