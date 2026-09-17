@@ -3,12 +3,15 @@
 
 #include "../headers/constants.h"
 #include "../headers/utilidades.h"
+#include "../headers/relatorio.h"
+#include "../headers/escola.h"
 
 void menuCadastro(void);
 void menuRelatorio(void);
 void printaMenu(struct winsize *w);
 void apagaLinhaMenu(int linhasParaApagar);
-void printContabilizado(const char *str, ...);
+void printSelecionado(const char *str,...);
+void printContabilizado(const char *str,...);
 
 /// @brief inicia o menu
 /// @param escola o objeto escola
