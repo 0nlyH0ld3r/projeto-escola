@@ -18,7 +18,15 @@ void cadastro_disciplina(disciplina* lista, individuo* lista_prof) {
 	input_disciplina(&lista[index], lista_prof, GERAL);
 }
 
-void remover_individuo(individuo* pessoa) {
+void remover_individuo(individuo* lista) {
+	for (size_t i = 0; i < MAX_PESSOAS_ESCOLA; ++i)
+		output_individuo(lista[i], false);
+
+	printf("\nDigite a matrícula da pessoa a ser deletada: ");
+	unsigned int matricula;
+	scanf_limpo("%d", &matricula);
+	individuo* pessoa = busca_matricula(lista, MAX_PESSOAS_ESCOLA, matricula);
+
 	if (pessoa == NULL) {
 		puts("\n\tPessoa não encontrada!\n");
 		return;
@@ -27,13 +35,21 @@ void remover_individuo(individuo* pessoa) {
 	pessoa->estado = NAO_ATIVO;
 }
 
-void remover_disciplina(disciplina* pessoa) {
-	if (pessoa == NULL) {
+void remover_disciplina(disciplina* lista) {
+	for (size_t i = 0; i < MAX_DISCIPLINAS_ESCOLA; ++i) {
+		output_disciplina(lista[i], false);
+	}
+	printf("\nDigite a matrícula da pessoa a ser deletada: ");
+	char codigo[MAX_CHAR_COD_DISCIPLINA];
+	fgets(codigo, MAX_CHAR_COD_DISCIPLINA, stdin);
+	disciplina* disciplina = busca_codigo(lista, MAX_DISCIPLINAS_ESCOLA, codigo);
+
+	if (disciplina == NULL) {
 		puts("\n\tDisciplina não encontrada!\n");
 		return;
 	}
 
-	pessoa->estado = NAO_ATIVO;
+	disciplina->estado = NAO_ATIVO;
 }
 
 void atualizar_individuo(individuo* pessoa, int opcao) {
