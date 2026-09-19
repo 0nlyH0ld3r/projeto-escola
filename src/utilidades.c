@@ -47,12 +47,28 @@ int ano_eh_bissexto(unsigned int ano) {
 } 
 
 individuo* busca_matricula(individuo* lista, size_t tam, unsigned int matricula) {
+	individuo* ptr = lista;
+
 	for (register size_t i = 0; i < tam; ++i) {
 		if (lista->matricula == matricula) {
-			return lista;
+			return ptr;
 		}
 
-		++lista;
+		++ptr;
+	}
+
+	return NULL;
+}
+
+disciplina* busca_codigo(disciplina* lista, size_t tam, char* codigo) {
+	disciplina* ptr = lista;
+
+	for (register size_t i = 0; i < tam; ++i) {
+		if (compara_strings(lista->codigo, codigo)) {
+			return ptr;
+		}
+
+		++ptr;
 	}
 
 	return NULL;
@@ -64,7 +80,10 @@ void input_string(char* string, size_t tam) {
 }
 
 int compara_strings(const char* string1, const char* string2) {
-	return !strcmp(string1, string2);
+	size_t len1 = strlen(string1) - 1;
+	size_t len2 = strlen(string2) - 1;
+	size_t len = len1 > len2 ? len2 : len1;
+	return !strncmp(string1, string2, len);
 }
 
 int input_char_non_canon(void) {
@@ -82,16 +101,16 @@ int input_char_non_canon(void) {
 	return ch;
 }
 
-int compara_nomes(const char* s1, const char* s2) {
-	size_t i = 0;
-	while (s1[i] == s2[i]) {
-		++i;
+int ordem_alfabetica(const char* s1, const char* s2) {
+	size_t len1 = strlen(s1) - 1;
+	size_t len2 = strlen(s2) - 1;
+
+	for (size_t i = 0; i < len1 && i < len2;) {
+		if (s1[i] < s2[i]) return 1;
+		if (s1[i] == s2[i]) ++i;
 	}
 
-	if (s1[i] < s2[i]) return true;
-
-
-	return false;
+	return 0;
 }
 
 int inverter_data (data tmp) {

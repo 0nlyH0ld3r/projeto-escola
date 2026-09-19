@@ -26,6 +26,7 @@ void listar_individuos(individuo* lista, ordenar_i ord, cargo cargo) {
 			puts("****LISTA DE ALUNOS****\n");
 			puts("***********************\n\n");
 			break;
+
 		case AMBOS:
 			puts("**********************\n");
 			puts("***LISTA DE PESSOAS***\n");
@@ -60,6 +61,7 @@ void listar_disciplinas(disciplina* lista, ordenar_d ord) {
 	puts("************************\n");
 	puts("**LISTA DE DISCIPLINAS**\n");
 	puts("************************\n\n");
+
 	for (size_t i = 0; i < tam; ++i) {
 		if (buff_l[i].estado == NAO_ATIVO) continue;
 
@@ -89,7 +91,30 @@ size_t ord_data(individuo* buff_l, size_t tam) {
 	return tam;
 }
 
-size_t ord_tres_disciplinas(individuo* buff_a, size_t tam) { // Ordenação exclusiva de alunos
+size_t busca_nome(individuo* buff_a, size_t tam, char* nome) {
+	size_t count = 0;
+	for (size_t i = 1; i < tam; ++i) {
+		individuo tmp = buff_a[i];
+		size_t j = i;
+
+		if (compara_strings(nome, tmp.nome)) {
+			while ( !(compara_strings(nome, buff_a[j-1].nome)) ) {
+				buff_a[j] = buff_a[j - 1];
+				--j;
+
+				continue;
+			}
+
+			++count;
+		}
+
+		buff_a[j] = tmp;
+	}
+
+	return count;
+}
+
+size_t ord_tres_disciplinas(individuo* buff_a, size_t tam) {
 	size_t count = 0;
 	for (size_t i = 1; i < tam; ++i) {
 		individuo tmp = buff_a[i];
@@ -114,17 +139,17 @@ size_t ord_tres_disciplinas(individuo* buff_a, size_t tam) { // Ordenação excl
 
 size_t ord_nome(individuo* buff_l, size_t tam) {
 	for (size_t i = 1; i < tam; ++i) {
-		char *tmp = buff_l[i].nome;
+		individuo tmp = buff_l[i];
 		size_t j = i;
 
-		while(compara_nomes(tmp, buff_l[j-1].nome) == true && j > 0) {
-			memcpy(buff_l[j].nome, buff_l[j-1].nome, sizeof(buff_l[j].nome));
+		while(ordem_alfabetica(tmp.nome, buff_l[j-1].nome) == true && j > 0) {
+			buff_l[j] = buff_l[j-1];
 			--j;
 
 			continue;
 		}
 
-		memcpy(buff_l[j-1].nome, tmp, sizeof(buff_l[j].nome));
+		buff_l[j] = tmp;
 	}
 
 	return tam;
@@ -138,6 +163,7 @@ size_t aniversariantes(individuo* buff_l, size_t tam) {
 	for (size_t i = 0; i < tam; ++i) {
 		individuo tmp = buff_l[i];
 		size_t j = i;
+
 		if (tmp.data.mes == (unsigned long)tm.tm_mon) {
 			while (tmp.data.mes != buff_l[j-1].data.mes && j > 0) {
 				buff_l[j] = buff_l[j - 1];
@@ -174,7 +200,6 @@ void output_individuo(individuo pessoa, int geral) {
 	}
 
 	printf("Matricula: %d\n\n", pessoa.matricula);
-
 }
 
 void output_disciplina(disciplina disciplina, int geral) {

@@ -71,13 +71,15 @@
 
 	individuo* busca_matricula(individuo* lista, size_t tam, unsigned int matricula);
 
+	disciplina* busca_codigo(disciplina* lista, size_t tam, char* matricula);
+
 	int data_eh_valida(data data);
 
 	int ano_eh_bissexto(unsigned int ano);
 
 	int inverter_data (data tmp);
 
-	int compara_nomes(const char* s1, const char* s2);
+	int ordem_alfabetica(const char* s1, const char* s2);
 
 	int mes_31_dias(unsigned int mes);
 
