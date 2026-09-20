@@ -32,6 +32,8 @@ void listar_individuos(individuo* lista, ordenar_i ord, cargo cargo) {
 			puts("***LISTA DE PESSOAS***\n");
 			puts("**********************\n\n");
 			break;
+		default:
+			break;
 	}
 
 	for (size_t i = 0; i < tam; ++i) {

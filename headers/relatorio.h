@@ -22,6 +22,8 @@
 		    uint8_t eh_doscente, uint8_t tipo);
 	#endif
 
+	size_t procura_nome(individuo* buff_a, size_t tam, char* nome);
+
 	void listar_individuos(individuo* lista, ordenar_i ordenacao, cargo cargo);
 
 	void listar_disciplinas(disciplina* lista, ordenar_d ord);
