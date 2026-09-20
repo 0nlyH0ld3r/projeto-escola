@@ -91,7 +91,40 @@ size_t ord_data(individuo* buff_l, size_t tam) {
 	return tam;
 }
 
-size_t busca_nome(individuo* buff_a, size_t tam, char* nome) {
+/**
+ * Aperta 0 pra sair (Printa isso)
+ */
+void barra_pesquisa(individuo* lista) {
+	char nome[MAX_CHAR_NOME] = {0};
+	char sair = 0;
+	size_t i = 0;
+	size_t tam = MAX_PESSOAS_ESCOLA;
+	int ch;
+
+	while (!sair) {
+		switch((ch=input_char_non_canon())) {
+		case '0':
+			sair = 0;
+			break;
+		case '\b':
+			nome[i] = '\0';
+			--i;
+			nome[i] = '\0';
+			break;
+		default:
+			nome[i] = ch;
+			tam = procura_nome(lista, MAX_PESSOAS_ESCOLA, nome);
+
+			for (size_t j = 0; j < tam; ++j)
+				output_individuo(lista[j], false);
+
+			++i;
+			break;
+		}
+	}
+}
+
+size_t procura_nome(individuo* buff_a, size_t tam, char* nome) {
 	size_t count = 0;
 	for (size_t i = 1; i < tam; ++i) {
 		individuo tmp = buff_a[i];
