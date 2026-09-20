@@ -48,11 +48,11 @@
     menu -> ┌──────────────────────┐
      │      │  Utilidades:         │  
      │      │                      │
-     │      │ x VLD. DATA          │       
+     │      │ v VLD. DATA          │       
      │      │ x VLD. CPF           │       
      │      │ x VLD. NOME          │       
-     │      │ * GERA MATRICULA     │
-     │      │ * PROCURA VAGA       │
+     │      │ v GERA MATRICULA     │
+     │      │ v PROCURA VAGA       │
      │      │                      │
      │      │ x PROCURA ARQ. SALVO │
      │      │ x SALVA ARQ(JSON).   │
@@ -60,15 +60,15 @@
      │      └──────────────────────┘
      │
      ├──────────────► escola -> utilidades            ┌──────────────────────┐
-     │                 │                              │ * ALTERA INDV.       │
-     │                 │                              │ * ADC INDV.          │
-     │                 │                              │ * DEL INDV.          │
-     │                 │                              │ * ATZ INDV.          │
+     │                 │                              │ v ALTERA INDV.       │
+     │                 │                              │ v ADC INDV.          │
+     │                 │                              │ v DEL INDV.          │
+     │                 │                              │ v ATZ INDV.          │
      │                 │                              │                      │
-     │                 │                              │ * ALTERA DISC.       │
-     │                 │                              │ * ADC DISC.          │
-     │                 │                              │ * DEL DISC.          │
-     │                 │                              │ * ATZ DISC.          │
+     │                 │                              │ v ALTERA DISC.       │
+     │                 │                              │ v ADC DISC.          │
+     │                 │                              │ v DEL DISC.          │
+     │                 │                              │ v ATZ DISC.          │
      │                 │                              │ * INSCRV. ALUNO      │
      │                 │                              └──────────────────────┘
      │                 ├── Cadastro Indv.(Matric;Nome;Sexo;Data;CPF;Cargo)
@@ -78,27 +78,27 @@
      │◄────────────────┘ retorna ao menu 
      │
      ├──────────────► relatorios -> utilidades        ┌──────────────────────┐
-     │                 │                              │ * LS INDV.           │
-     │                 │                              │ * LS ALUN.           │
-     │                 │                              │ * LS PROF.           │
+     │                 │                              │ v LS INDV.           │
+     │                 │                              │ v LS ALUN.           │
+     │                 │                              │ v LS PROF.           │
      │                 │                              └──────────────────────┘
-     │                 ├── Lista Indv.(Aln ou Prof.)
-     │                 ├── Lista Indv. por sexo(Aln ou Prof.)
-     │                 ├── Lista Indv. por nome(Aln ou Prof.)
-     │                 ├── Lista Indv. por data(Aln ou Prof.)
-     │                 ├── Lista Indv. por string
-     │                 ├── Lista Indv. ALUNOS matriculados em menos de 3 disciplinas
-     │                 ├── Lista Indv. Aniversariantes do mês
-     │                 ├── Lista Disciplinas.
-     │                 ├── Lista Disciplinas - Dados de uma disciplina específica.
-     │                 ├── Lista Disciplinas (com nome do professor) que extrapolam 40 vagas.
+     │                 ├── v Lista Indv.(Aln ou Prof.)
+     │                 ├── * Lista Indv. por sexo(Aln ou Prof.)
+     │                 ├── v* Lista Indv. por nome(Aln ou Prof.)
+     │                 ├── v Lista Indv. por data(Aln ou Prof.)
+     │                 ├── v* Lista Indv. por string
+     │                 ├── v Lista Indv. ALUNOS matriculados em menos de 3 disciplinas
+     │                 ├── v Lista Indv. Aniversariantes do mês
+     │                 ├── v Lista Disciplinas.
+     │                 ├── * Lista Disciplinas - Dados de uma disciplina específica.
+     │                 ├── * Lista Disciplinas (com nome do professor) que extrapolam 40 vagas.
      │                 │
      │◄────────────────┘ retorna ao menu 
      │
      ▼
      └──────────────► sair
                        │
-                       ▼
+                       *
                       main
                        │
                        ▼
