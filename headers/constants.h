@@ -35,6 +35,7 @@
 		CODIGO,
 		PROFESSOR,
 		SEMESTRE,
+		DISCIPLINA,
 	};
 
 	enum MenuRelatorio {
@@ -74,8 +75,8 @@
 	} cargo;
 
 	typedef enum Genero{
-		FEMININO = 0,
-		MASCULINO = 1,
+		FEM = 'F',
+		MASC = 'M',
 	} genero;
 
 
@@ -124,8 +125,7 @@
 
 	struct Escola {
 		disciplina*	disciplinas[MAX_DISCIPLINAS_ESCOLA];
-		individuo*	professores[MAX_PESSOAS_ESCOLA];
-		individuo*	alunos[MAX_PESSOAS_ESCOLA];
+		individuo*	pessoas[MAX_PESSOAS_ESCOLA];
 	};
 
 	struct Individuo {
