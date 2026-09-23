@@ -1,10 +1,22 @@
 #include "../headers/relatorio.h"
 #include "../headers/escola.h"
 #include "../headers/utilidades.h"
+#include "constants.h"
 
 //
 // Funções de listagem
 //
+
+static void print_header_individuo(cargo cargo);
+static size_t procura_nome(individuo *buff, size_t tam, char *nome);
+
+ordenar_i ordenar_pessoas[] = {NULL,
+			       ord_data,
+			       ord_nome,
+			       ord_genero,
+			       filtro_3_disciplinas,
+			       filtro_aniversariante,
+			       pesquisa_pessoa};
 
 void listar_individuos(individuo *lista, ordenar_i ord, cargo cargo)
 {
@@ -15,27 +27,7 @@ void listar_individuos(individuo *lista, ordenar_i ord, cargo cargo)
 	if (ord != NULL)
 		tam = ord(buff_lista, tam);
 
-	switch (cargo) {
-	case DOSCENTE:
-		puts("************************\n");
-		puts("**LISTA DE PROFESSORES**\n");
-		puts("************************\n\n");
-		break;
-
-	case DISCENTE:
-		puts("***********************\n");
-		puts("****LISTA DE ALUNOS****\n");
-		puts("***********************\n\n");
-		break;
-
-	case AMBOS:
-		puts("**********************\n");
-		puts("***LISTA DE PESSOAS***\n");
-		puts("**********************\n\n");
-		break;
-	default:
-		break;
-	}
+	print_header_individuo(cargo);
 
 	for (size_t i = 0; i < tam; ++i) {
 		if (cargo == AMBOS) {
@@ -59,7 +51,6 @@ void listar_individuos(individuo *lista, ordenar_i ord, cargo cargo)
 void listar_disciplinas(disciplina *lista, ordenar_d ord)
 {
 	size_t tam = MAX_DISCIPLINAS_ESCOLA;
-
 	disciplina buff_l[tam];
 
 	memcpy(buff_l, lista, sizeof(disciplina) * tam);
@@ -76,7 +67,7 @@ void listar_disciplinas(disciplina *lista, ordenar_d ord)
 			continue;
 		}
 
-		output_disciplina(buff_l[i], true);
+		output_disciplina(buff_l[i], false);
 	}
 }
 
@@ -103,65 +94,25 @@ size_t ord_data(individuo *buff_l, size_t tam)
 	return tam;
 }
 
-/**
- * Aperta 0 pra sair (Printa isso)
- */
-void barra_pesquisa(individuo *lista)
+size_t pesquisa_pessoa(individuo *buff_l, size_t tam)
 {
 	char nome[MAX_CHAR_NOME] = {0};
-	char sair = 0;
-	size_t i = 0;
-	size_t tam = MAX_PESSOAS_ESCOLA;
-	int ch;
 
-	while (!sair) {
-		switch ((ch = input_char_non_canon())) {
-		case '0':
-			sair = 0;
-			break;
-		case '\b':
-			nome[i] = '\0';
-			--i;
-			nome[i] = '\0';
-			break;
-		default:
-			nome[i] = ch;
-			tam = procura_nome(lista, MAX_PESSOAS_ESCOLA, nome);
+	puts("\nDigite um nome para ser pesquisado na lista de alunos\n"
+	     "O nome deve possuir pelo menos 3 letras.\n\nNOME: ");
 
-			for (size_t j = 0; j < tam; ++j)
-				output_individuo(lista[j], false);
+	size_t len;
+	do {
+		fgets(nome, tam, stdin);
+		len = strlen(nome);
+	} while (len <= 4);
 
-			++i;
-			break;
-		}
-	}
+	return procura_nome(buff_l, tam, nome);
 }
 
-size_t procura_nome(individuo *buff, size_t tam, char *nome)
-{
-	size_t count = 0;
-	for (size_t i = 1; i < tam; ++i) {
-		individuo t = buff[i];
-		size_t j = i;
+size_t pesquisa_disciplina(disciplina *buff_l, size_t tam);
 
-		if (compara_strings(nome, t.nome)) {
-			while (!(compara_strings(nome, buff[j - 1].nome))) {
-				buff[j] = buff[j - 1];
-				--j;
-
-				continue;
-			}
-
-			++count;
-		}
-
-		buff[j] = t;
-	}
-
-	return count;
-}
-
-size_t ord_tres_disciplinas(individuo *buff, size_t tam)
+size_t filtro_3_disciplinas(individuo *buff, size_t tam)
 {
 	size_t count = 0;
 	for (size_t i = 1; i < tam; ++i) {
@@ -206,7 +157,7 @@ size_t ord_nome(individuo *buff_l, size_t tam)
 	return tam;
 }
 
-size_t aniversariantes(individuo *buff, size_t tam)
+size_t filtro_aniversariante(individuo *buff, size_t tam)
 {
 	size_t count = 0;
 	time_t mytime = time(NULL);
@@ -279,20 +230,75 @@ void output_individuo(individuo pessoa, int geral)
 	printf("Matricula: %d\n\n", pessoa.matricula);
 }
 
-void output_disciplina(disciplina disciplina, int geral)
+void output_disciplina(disciplina disciplina, int alunos)
 {
 	if (disciplina.estado == NAO_ATIVO)
 		return;
 
 	printf("Disciplina: %s\n", disciplina.nome);
 	printf("Código: %s\n", disciplina.codigo);
+	printf("Semestre: %u\n", disciplina.semestre);
 
 	printf("Doscente responsável: %s\n\n\n", disciplina.professor->nome);
 
-	if (geral == true) {
-		printf("Semestre: %u\n", disciplina.semestre);
-		// TODO: Printar os alunos
+	if (alunos == true) {
+		for (size_t i = 0; i < MAX_NUMERO_ALUNOS_DISCIPLINA; ++i)
+			output_individuo(*disciplina.alunos[i], false);
 	} else {
 		puts("\n\n");
+	}
+}
+
+//
+// FUNÇÕES LOCAIS
+//
+
+static size_t procura_nome(individuo *buff, size_t tam, char *nome)
+{
+	size_t count = 0;
+	for (size_t i = 1; i < tam; ++i) {
+		individuo t = buff[i];
+		size_t j = i;
+
+		if (compara_strings(nome, t.nome)) {
+			while (!(compara_strings(nome, buff[j - 1].nome))) {
+				buff[j] = buff[j - 1];
+				--j;
+
+				continue;
+			}
+
+			++count;
+		}
+
+		buff[j] = t;
+	}
+
+	return count;
+}
+
+static void print_header_individuo(cargo cargo)
+{
+
+	switch (cargo) {
+	case DOSCENTE:
+		puts("************************\n");
+		puts("**LISTA DE PROFESSORES**\n");
+		puts("************************\n\n");
+		break;
+
+	case DISCENTE:
+		puts("***********************\n");
+		puts("****LISTA DE ALUNOS****\n");
+		puts("***********************\n\n");
+		break;
+
+	case AMBOS:
+		puts("**********************\n");
+		puts("***LISTA DE PESSOAS***\n");
+		puts("**********************\n\n");
+		break;
+	default:
+		break;
 	}
 }

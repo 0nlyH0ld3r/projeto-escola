@@ -13,15 +13,20 @@
 	*/
 	void remover_individuo(individuo* pessoa);
 
-	/* Atualizar individuos. Só recebe uma lista de individuos
-	* e atualiza individuo lá. Tem o parâmetro opcao que é uma enumm
+	/* Atualizar individuos. Recebe uma lista de individuos
+	* e atualiza individuo lá.
+	* O segundo parâmetro é uma lista de disciplinas. Pode ser NULL
+	* caso o terceiro parâmetro não seja DISCIPLINA
+	* Tem também o parâmetro opcao que é uma enumm
 	* dentro de constants.h pra saber o que quer atualizar.
+	*
+	* opções: É uma enum em constants.h
 	*/
-	void atualizar_individuo(individuo* pessoa, int opcao);
+	void atualizar_individuo(individuo* pessoa, disciplina *disciplinas, int opcao);
 
 	/* Função de utilidade pra cadastrar e atualizar individuos
 	*/
-	void input_individuo(individuo* lista, int opcao);
+	void input_individuo(individuo* lista, disciplina *disciplinas, int opcao);
 
 	/* Cadastrar disciplinas. Só recebe uma lista de discplinas
 	* e cadastra a nova disciplina lá.
