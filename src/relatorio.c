@@ -211,12 +211,13 @@ size_t aniversariantes(individuo *buff, size_t tam)
 	size_t count = 0;
 	time_t mytime = time(NULL);
 	struct tm tm = *localtime(&mytime);
+	unsigned long mes_atual = (unsigned long)tm.tm_mon;
 
 	for (size_t i = 0; i < tam; ++i) {
 		individuo t = buff[i];
 		size_t j = i;
 
-		if (t.data.mes == (unsigned long)tm.tm_mon) {
+		if (t.data.mes == mes_atual) {
 			while (t.data.mes != buff[j - 1].data.mes && j > 0) {
 				buff[j] = buff[j - 1];
 				--j;
@@ -231,6 +232,25 @@ size_t aniversariantes(individuo *buff, size_t tam)
 	}
 
 	return count;
+}
+
+size_t ord_genero(individuo *buff, size_t tam)
+{
+	for (size_t i = 0; i < tam; ++i) {
+		individuo t = buff[i];
+		size_t j = i;
+
+		while (t.genero == FEM && buff[j - 1].genero == MASC && j > 0) {
+			buff[j] = buff[j - 1];
+			--j;
+
+			continue;
+		}
+
+		buff[j] = t;
+	}
+
+	return tam;
 }
 
 //
@@ -252,7 +272,7 @@ void output_individuo(individuo pessoa, int geral)
 		printf("Data de Nascimento: %2d/%2d/%4d\n", pessoa.data.dia,
 		       pessoa.data.mes, pessoa.data.ano);
 		printf("Gênero: %s\n",
-		       pessoa.genero == 'M' ? "Masculino" : "Feminino");
+		       pessoa.genero == MASC ? "Masculino" : "Feminino");
 		printf("Número de disciplinas: %d\n\n\n", pessoa.n_disciplinas);
 	}
 

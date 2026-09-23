@@ -74,8 +74,8 @@
 	} cargo;
 
 	typedef enum Genero{
-		FEMININO = 0,
-		MASCULINO = 1,
+		FEM = 'F',
+		MASC = 'M',
 	} genero;
 
 

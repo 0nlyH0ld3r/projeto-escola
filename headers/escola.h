@@ -45,7 +45,9 @@
 * em outro canto, mas esqueci dela. Primeiro preciso verificar.
 */
 void input_disciplina(disciplina* lista, individuo* lista_prof, int opcao);
-		/* Função de util
+
+		/* Macro para inicializar as listas de individuos e disciplinas
+		 */
 	#define inicializar_lista(lista, tam)		\
 		for (size_t i = 0; i < tam; ++i){	\
 			lista[i].estado = NAO_ATIVO; \
