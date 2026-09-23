@@ -134,7 +134,7 @@ void input_individuo(individuo* pessoa, int opcao) {
 			pessoa->data.mes	= (data % 1000000) / 10000;
 			pessoa->data.dia	= data / 1000000;
 
-		} while (data_eh_valida(pessoa->data) == true);
+		} while (data_eh_valida(pessoa->data) == false);
 
 		if (opcao != GERAL) return;
 
@@ -187,15 +187,15 @@ void input_disciplina(disciplina* disciplina, individuo* lista_prof, int opcao) 
 			if (lista_prof[i].cargo == DOSCENTE)
 				output_individuo(lista_prof[i], false);
 
+		puts("\nSelecione o professor pela matrícula: ");
 		do { 
-			puts("\nSelecione o professor pela matrícula: ");
 			scanf_limpo("%u", &matricula);
 
-			disciplina->professor = busca_matricula(lista_prof, MAX_PESSOAS_ESCOLA, matricula);
+				disciplina->professor = busca_matricula(lista_prof, MAX_PESSOAS_ESCOLA, matricula);
 
-			if (disciplina->professor != NULL) break;
+			if (disciplina->professor != NULL && disciplina->professor->cargo == DOSCENTE) break;
 
-			puts("\nDigite a matrícula válida de um professor!");
+			puts("\nDigite a matrícula válida de um professor!\n:");
 
 		} while(1);
 

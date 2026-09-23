@@ -1,0 +1,80 @@
+[
+  {
+    "file": "src/escola.c",
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Iheaders",
+      "-c",
+      "src/escola.c",
+      "-o",
+      "build/escola.o"
+    ],
+    "directory": "/home/brunov/codigos/ifba/inf029/projeto-escola",
+    "output": "build/escola.o"
+  },
+  {
+    "file": "src/main_v2.c",
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Iheaders",
+      "-c",
+      "src/main_v2.c",
+      "-o",
+      "build/main_v2.o"
+    ],
+    "directory": "/home/brunov/codigos/ifba/inf029/projeto-escola",
+    "output": "build/main_v2.o"
+  },
+  {
+    "file": "src/menu.c",
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Iheaders",
+      "-c",
+      "src/menu.c",
+      "-o",
+      "build/menu.o"
+    ],
+    "directory": "/home/brunov/codigos/ifba/inf029/projeto-escola",
+    "output": "build/menu.o"
+  },
+  {
+    "file": "src/menu_v2.c",
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Iheaders",
+      "-c",
+      "src/menu_v2.c",
+      "-o",
+      "build/menu_v2.o"
+    ],
+    "directory": "/home/brunov/codigos/ifba/inf029/projeto-escola",
+    "output": "build/menu_v2.o"
+  },
+  {
+    "file": "src/relatorio.c",
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Iheaders",
+      "-c",
+      "src/relatorio.c",
+      "-o",
+      "build/relatorio.o"
+    ],
+    "directory": "/home/brunov/codigos/ifba/inf029/projeto-escola",
+    "output": "build/relatorio.o"
+  },
+  {
+    "file": "src/utilidades.c",
+    "arguments": [
+      "/usr/bin/gcc",
+      "-Iheaders",
+      "-c",
+      "src/utilidades.c",
+      "-o",
+      "build/utilidades.o"
+    ],
+    "directory": "/home/brunov/codigos/ifba/inf029/projeto-escola",
+    "output": "build/utilidades.o"
+  }
+]
