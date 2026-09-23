@@ -25,6 +25,12 @@
 	#define MAX_NUMERO_ALUNOS_DISCIPLINA	3
 	#define MAX_DISCIPLINAS_INDIVIDUO		2
 
+	#define N_MENU_MAIN						3  //NÚMERO DE OPÇÕES DO MENU PRINCIPAL
+
+	enum SecaoMenu{
+		INICIO,
+		FINAL,
+	};
 	enum opcoes_cadastro_atualizar {
 		GERAL,
 		NOME,

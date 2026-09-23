@@ -6,9 +6,17 @@
 #include "../headers/relatorio.h"
 #include "../headers/escola.h"
 
+typedef struct {
+    const char **opcoes;
+    size_t tamanho;
+    int pai;
+} MENUS;
+
+
 void menuCadastro(void);
 void menuRelatorio(void);
-void printaMenu(struct winsize *w);
+void printaMenu(struct winsize *w, int linhaSelecionada, MENUS menuAtivo);
+void printLimitesMenu(int secao, int totalColunas, int posMenu);
 void apagaLinhaMenu(int linhasParaApagar);
 void printSelecionado(const char *str,...);
 void printContabilizado(const char *str,...);

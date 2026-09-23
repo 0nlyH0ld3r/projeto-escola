@@ -3,21 +3,22 @@
 #include <stdio.h>
 
 #define ANSI_COLOR_RED     "\x1b[31m"
-#define DEBUG 1
-#define PRODUCTION 0
+#define DEBUG               1
+#define PRODUCTION          0
 
 /// @brief Cria o objeto escola e chama menu
 /// @param teste = define se é DEBUG ou não 
 void inicia_escola(int teste){
+    escola escolaAtual;
+
     if(teste){
         printf("MODO DE DEPURAÇÃO. \n");
         printf("version: V2. \n");
+        menuv2(&escolaAtual, teste);
+        return;
     }
 
-    escola escolaAtual;
-
     menuv2(&escolaAtual, teste);
-
     return;
 }
 
@@ -39,7 +40,5 @@ int main(int argc, char** argv){
         inicia_escola(PRODUCTION);
         return 0;
     }
-
-
 }
 
