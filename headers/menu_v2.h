@@ -7,10 +7,10 @@
 #include "../headers/escola.h"
 
 typedef struct {
-	const char **opcoes;
-	size_t 		tamanho;
-}MENUS;
-
+    const char **opcoes;
+    size_t tamanho;
+    int pai;
+} MENUS;
 
 
 void menuCadastro(void);
