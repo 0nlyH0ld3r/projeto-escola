@@ -363,10 +363,11 @@ void menuv2(escola *escola, int debug)
 
                 if (opcaoAtiva == 0) {
                 	printContabilizado("Digite um código de disciplina para atualizar, ou 0 para retornar!");
-					unsigned int matricula;
-					scanf_limpo("%u", &matricula);
-					individuo *prt = busca_matricula(escola->pessoas, MAX_PESSOAS_ESCOLA, matricula);
-                    atualizar_individuo(prt, NULL, GERAL);
+					char *codigo;
+					scanf_limpo("%s", &codigo);
+					if (codigo == "0")break;
+					disciplina *prt = busca_codigo(escola->disciplinas, MAX_DISCIPLINAS_ESCOLA, codigo);
+                    atualizar_disciplina(prt, GERAL);
                 }
 
                 else if (opcaoAtiva == 1) {

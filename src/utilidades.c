@@ -91,12 +91,12 @@ individuo *busca_matricula(
     return NULL;
 }
 
-disciplina *busca_codigo(disciplina *lista, size_t tam, char *codigo)
+disciplina *busca_codigo(disciplina *lista[], size_t tam, char *codigo)
 {
-	disciplina *ptr = lista;
+	disciplina *ptr = *lista;
 
 	for (register size_t i = 0; i < tam; ++i) {
-		if (compara_strings(lista->codigo, codigo)) {
+		if (lista[i] != NULL && compara_strings(lista[i]->codigo, codigo)) {
 			return ptr;
 		}
 

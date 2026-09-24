@@ -83,7 +83,7 @@ individuo *busca_matricula(
     size_t tam,
     unsigned int matricula
 );
-disciplina *busca_codigo(disciplina *lista, size_t tam, char *matricula);
+disciplina *busca_codigo(disciplina *lista[], size_t tam, char *matricula);
 
 int data_eh_valida(data data);
 
