@@ -22,11 +22,11 @@
 	*
 	* opções: É uma enum em constants.h
 	*/
-	void atualizar_individuo(individuo	*pessoa, disciplina *disciplinas, int opcao);
+	void atualizar_individuo(individuo	*pessoa, disciplina *disciplinas[], int opcao);
 
 	/* Função de utilidade pra cadastrar e atualizar individuos
 	*/
-	void input_individuo(individuo* lista, disciplina *disciplinas, int opcao);
+	void input_individuo(individuo* lista, disciplina *disciplinas[], int opcao);
 
 	/* Cadastrar disciplinas. Só recebe uma lista de discplinas
 	* e cadastra a nova disciplina lá.
@@ -42,7 +42,7 @@
 	* e atualiza disciplina lá. Tem o parâmetro opcao que é uma enumm
 	* dentro de constants.h pra saber o que quer atualizar.
 	*/
-	void atualizar_disciplina(disciplina* disciplina, int opcao);
+	void atualizar_disciplina(individuo *lista_prof[],disciplina* disciplina, int opcao);
 
 /* Função de utilidade pra cadastrar e atualizar individuos.
 * Depois checar que eu talvez remova essa, a contraparte de invidiuos dela 
@@ -50,6 +50,7 @@
 * em outro canto, mas esqueci dela. Primeiro preciso verificar.
 */
 void input_disciplina(disciplina* lista, individuo* lista_prof[], int opcao);
+void relatorio_disciplina(disciplina *lista[]);
 
 		/* Macro para inicializar as listas de individuos e disciplinas
 		 */

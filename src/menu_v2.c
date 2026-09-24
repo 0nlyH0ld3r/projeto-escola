@@ -269,8 +269,9 @@ void menuv2(escola *escola, int debug)
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &janela);
 
     while (!sair) {
-
+        if (menuAtual== 0)system("clear");
         printaMenu(&janela, opcaoAtiva, menuAtivo);
+       
 
         tecla = pegaTeclaComando();
 
@@ -295,6 +296,7 @@ void menuv2(escola *escola, int debug)
              * MENU PRINCIPAL
              */
             if (menuAtual == 0) {
+                
 
                 if (opcaoAtiva == 0) {
                     // Sair
@@ -340,11 +342,40 @@ void menuv2(escola *escola, int debug)
                     opcaoAtiva = 0;
                 }
 				else if (opcaoAtiva == 3) {
-                    // Cadastro -> Atualizar
-                    menuAtual = menuAtivo.pai;
+                    printContabilizado("Digite uma matricula para inscrever, ou 0 para retornar!");
+					unsigned int matricula;
+					scanf_limpo("%u", &matricula);
+                    if (matricula == 0)break;
+                    printContabilizado("Digite um código de disciplina para matricular.");
+					char codigo[MAX_CHAR_COD_DISCIPLINA];
+					scanf("%s", codigo);
+                    disciplina *disc = busca_codigo(escola->disciplinas, MAX_DISCIPLINAS_ESCOLA, codigo);
+                    individuo *indv = busca_matricula(escola->pessoas, MAX_PESSOAS_ESCOLA, matricula);
+                    if (disc == NULL) {
+                        printContabilizado("\nDisciplina não encontrada!\n");
+                        break;
+                    }
 
-                    menuAtivo = listaMenus[menuAtual];
-                    opcaoAtiva = 0;
+                    if (indv == NULL) {
+                        printContabilizado("\nPessoa não encontrada!\n");
+                        break;
+                    }
+                    if (disc->n_dalunos >= MAX_NUMERO_ALUNOS_DISCIPLINA) {
+                        printContabilizado("\nA disciplina está cheia!\n");
+                        break;
+                    }
+
+                    if (indv->n_disciplinas >= MAX_DISCIPLINAS_INDIVIDUO) {
+                        printContabilizado("\nO aluno já atingiu o limite de disciplinas!\n");
+                        break;
+                    }
+                    disc->alunos[disc->n_dalunos] = indv;
+                    indv->disciplinas[indv->n_disciplinas] =disc;
+                    indv->n_disciplinas++;
+                    disc->n_dalunos++;
+                    printContabilizado("Inscrito com sucesso");
+                    sleep(2);
+                    break;
                 }
 
                 else if (opcaoAtiva == 4) {
@@ -363,11 +394,11 @@ void menuv2(escola *escola, int debug)
 
                 if (opcaoAtiva == 0) {
                 	printContabilizado("Digite um código de disciplina para atualizar, ou 0 para retornar!");
-					char *codigo;
-					scanf_limpo("%s", &codigo);
+					char codigo[MAX_CHAR_COD_DISCIPLINA];
+					scanf("%s", codigo);
 					if (codigo == "0")break;
 					disciplina *prt = busca_codigo(escola->disciplinas, MAX_DISCIPLINAS_ESCOLA, codigo);
-                    atualizar_disciplina(prt, GERAL);
+                    atualizar_disciplina(escola->pessoas, prt, GERAL);
                 }
 
                 else if (opcaoAtiva == 1) {
@@ -412,6 +443,12 @@ void menuv2(escola *escola, int debug)
                 else if (opcaoAtiva == 2) {
 					system("clear");
                     listar_disciplinas(escola->disciplinas, NULL);
+                    printContabilizado("Para detalhes digite o código de um disciplina ou 0 para retornar");
+                    relatorio_disciplina(escola->disciplinas);
+                    menuAtual = menuAtivo.pai;
+
+                    menuAtivo = listaMenus[menuAtual];
+                    opcaoAtiva = 0;
                 }
 
                 else if (opcaoAtiva == 3) {

@@ -153,6 +153,7 @@
 		individuo*	professor;				// Ponteiro para Professor responsável
 		individuo*	alunos[MAX_NUMERO_ALUNOS_DISCIPLINA];	// Lista de alunos matriculados
 		unsigned int	estado;					// NAO_ATIVO <- Vaga livre pra uso
+		unsigned int	n_dalunos;				// Número de disciplinas do individuo.
 	};
 	
 

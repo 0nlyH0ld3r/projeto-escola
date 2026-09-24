@@ -2,6 +2,7 @@
 #include "../headers/constants.h"
 #include "../headers/relatorio.h"
 #include "../headers/utilidades.h"
+#include "../headers/menu.h"
 /*
 void cadastro_individuo(individuo *pessoas)
 {
@@ -98,7 +99,7 @@ void remover_disciplina(disciplina *lista)
 	disciplina->estado = NAO_ATIVO;
 }
 */
-void atualizar_individuo(individuo *pessoa, disciplina *disciplinas, int opcao)
+void atualizar_individuo(individuo *pessoa, disciplina *disciplinas[], int opcao)
 {
 	if (pessoa == NULL) {
 		puts("\n\tPessoa não encontrada!\n");
@@ -108,17 +109,17 @@ void atualizar_individuo(individuo *pessoa, disciplina *disciplinas, int opcao)
 	input_individuo(pessoa, disciplinas, opcao);
 }
 
-void atualizar_disciplina(disciplina *disciplina, int opcao)
+void atualizar_disciplina(individuo *lista_prof[], disciplina *disciplina, int opcao)
 {
 	if (disciplina == NULL) {
 		puts("\n\tDisciplina não encontrada!\n");
 		return;
 	}
 
-	input_disciplina(disciplina, NULL, opcao);
+	input_disciplina(disciplina, lista_prof, opcao);
 }
 
-void input_individuo(individuo *pessoa, disciplina *disciplinas, int opcao)
+void input_individuo(individuo *pessoa, disciplina *disciplinas[], int opcao)
 {
 	if (pessoa == NULL) {
 		puts("\n\tPessoa não encontrada!\n");
@@ -195,7 +196,7 @@ void input_individuo(individuo *pessoa, disciplina *disciplinas, int opcao)
 		if (pessoa->n_disciplinas == MAX_DISCIPLINAS_INDIVIDUO) return;
 
 		for (size_t i = 0; i < MAX_DISCIPLINAS_ESCOLA; ++i)
-			output_disciplina(disciplinas[i], false);
+			output_disciplina(*disciplinas[i], false);
 
 		puts("\nDigite o código da disciplina em que deseja se "
 		     "matricular: ");
@@ -340,8 +341,10 @@ void input_disciplina(
             }
         }
 		if(total_professor == 0){
+			
 			puts("\n Não existem professores cadastrados,\
 				por favor cadastre um professor primeiro!");
+			sleep(4);
 			break;
 		}
 
@@ -368,4 +371,64 @@ void input_disciplina(
         puts("\n");
         break;
     }
+}
+void relatorio_disciplina(disciplina *lista[])
+{
+    char codigo[MAX_CHAR_COD_DISCIPLINA];
+
+    printf(
+        "Digite o código da disciplina, ou 0 para retornar: "
+    );
+
+    scanf("%s", codigo);
+
+    if (strcmp(codigo, "0") == 0)
+        return;
+
+    disciplina *disc = busca_codigo(
+        lista,
+        MAX_DISCIPLINAS_ESCOLA,
+        codigo
+    );
+
+    if (disc == NULL) {
+        printf("\nDisciplina não encontrada!\n");
+        printf("Pressione ENTER para continuar...");
+        getchar();
+        getchar();
+        return;
+    }
+
+    printf("\n");
+    printf("*******************************\n");
+    printf("      DADOS DA DISCIPLINA\n");
+    printf("*******************************\n\n");
+
+    printf("Nome: %s\n", disc->nome);
+    printf("Código: %s\n", disc->codigo);
+    printf("Semestre: %u\n", disc->semestre);
+
+    printf("\nProfessor:\n");
+
+    if (disc->professor != NULL) {
+        printf("\tNome: %s\n", disc->professor->nome);
+        printf("\tMatrícula: %u\n", disc->professor->matricula);
+    } else {
+        printf("\tNenhum professor cadastrado.\n");
+    }
+
+    printf("\nAlunos matriculados: %u\n", disc->n_dalunos);
+
+    for (size_t i = 0; i < disc->n_dalunos; ++i) {
+        if (disc->alunos[i] == NULL)
+            continue;
+
+        printf("\t%u - %s\n",
+               disc->alunos[i]->matricula,
+               disc->alunos[i]->nome);
+    }
+
+    printf("\nPressione ENTER para voltar...");
+    getchar();
+    getchar();
 }
