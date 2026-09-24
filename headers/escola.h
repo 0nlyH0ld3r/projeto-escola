@@ -6,12 +6,12 @@
 	/* Cadastra individuos. Só recebe uma lista de individuos
 	* e cadastrar o novo indivíduo lá.
 	*/
-	void cadastro_individuo(individuo* lista);
+	void cadastro_individuo(individuo *lista[]);
 
 	/* Remover individuos. Só recebe uma lista de individuos, printa
 	* uma lista de escolha e remove o individuo pelo código digitado.
 	*/
-	void remover_individuo(individuo* pessoa);
+	void remover_individuo(individuo* pessoa[]);
 
 	/* Atualizar individuos. Recebe uma lista de individuos
 	* e atualiza individuo lá.
@@ -22,7 +22,7 @@
 	*
 	* opções: É uma enum em constants.h
 	*/
-	void atualizar_individuo(individuo* pessoa, disciplina *disciplinas, int opcao);
+	void atualizar_individuo(individuo	*pessoa, disciplina *disciplinas, int opcao);
 
 	/* Função de utilidade pra cadastrar e atualizar individuos
 	*/
@@ -31,7 +31,7 @@
 	/* Cadastrar disciplinas. Só recebe uma lista de discplinas
 	* e cadastra a nova disciplina lá.
 	*/
-	void cadastro_disciplina(disciplina* lista, individuo* lista_prof);
+	void cadastro_disciplina(disciplina* lista[], individuo* lista_prof[]);
 
 	/* Remover disciplinas. Só recebe uma lista de discplinas, printa
 	* uma lista de escolha e remove a disciplina pelo código digitado1.
@@ -49,7 +49,7 @@
 * não tá aqui então acho que removi a contraparte pq não tava sendo necessária 
 * em outro canto, mas esqueci dela. Primeiro preciso verificar.
 */
-void input_disciplina(disciplina* lista, individuo* lista_prof, int opcao);
+void input_disciplina(disciplina* lista, individuo* lista_prof[], int opcao);
 
 		/* Macro para inicializar as listas de individuos e disciplinas
 		 */

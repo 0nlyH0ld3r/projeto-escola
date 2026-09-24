@@ -74,10 +74,15 @@ int compara_strings(const char *string1, const char *string2);
  *
  */
 int input_char_non_canon(void);
-
+/*
 individuo *busca_matricula(individuo *lista, size_t tam,
 			   unsigned int matricula);
-
+			   */
+individuo *busca_matricula(
+    individuo *lista[],
+    size_t tam,
+    unsigned int matricula
+);
 disciplina *busca_codigo(disciplina *lista, size_t tam, char *matricula);
 
 int data_eh_valida(data data);

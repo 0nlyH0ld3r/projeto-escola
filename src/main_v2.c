@@ -9,7 +9,7 @@
 /// @brief Cria o objeto escola e chama menu
 /// @param teste = define se é DEBUG ou não 
 void inicia_escola(int teste){
-    escola escolaAtual;
+    escola escolaAtual = {0};
 
     if(teste){
         printf("MODO DE DEPURAÇÃO. \n");

@@ -34,6 +34,12 @@ const char *opcoes_relatorio[] = {
     "\t - Listar Disciplinas - \n",
     "\t - Voltar - \n",
 };
+const char *opcoes_relatorio_aluno[] = {
+    "\t - Listar Por Sexo - \n",
+    "\t - Listar Por Nome - \n",
+    "\t - Listar por Data de Nascimento - \n",
+    "\t - Voltar - \n",
+};
 
 const char *opcoes_atualizar[] = {
     "\t - Atualizar Disciplina - \n",
@@ -45,6 +51,7 @@ const char *opcoes_cadastro[] = {
     "\t - Cadastrar Disciplina - \n",
     "\t - Cadastrar Indivíduo - \n",
     "\t - Atualizar Cadastro - \n",
+	"\t - Inscrever Aluno Em Disciplina - \n",
     "\t - Voltar - \n",
 };
 
@@ -80,11 +87,7 @@ void printLimitesMenu(int secao, int totalColunas, int posMenu)
     }
 }
 
-void printaMenu(
-    struct winsize *w,
-    int linhaSelecionada,
-    MENUS menuAtivo
-)
+void printaMenu(struct winsize *w, int linhaSelecionada, MENUS menuAtivo)
 {
     MENUS menubase = {
         .opcoes = menuAtivo.opcoes,
@@ -229,12 +232,24 @@ void menuv2(escola *escola, int debug)
         .tamanho = sizeof(opcoes_relatorio) / sizeof(opcoes_relatorio[0]),
         .pai = 0
     };
+	MENUS menuRelatorioAluno = {
+        .opcoes = opcoes_relatorio_aluno,
+        .tamanho = sizeof(opcoes_relatorio) / sizeof(opcoes_relatorio[0]),
+        .pai = 3
+    };
+	MENUS menuRelatorioProfessor = {
+        .opcoes = opcoes_relatorio_aluno,
+        .tamanho = sizeof(opcoes_relatorio) / sizeof(opcoes_relatorio[0]),
+        .pai = 3
+    };
 
     MENUS listaMenus[] = {
         menuPrincipal,
         menuCadastro,
         menuAtualizar,
-        menuRelatorio
+        menuRelatorio,
+		menuRelatorioAluno,
+		menuRelatorioProfessor,
     };
 
     int menuAtual = 0;
@@ -309,12 +324,13 @@ void menuv2(escola *escola, int debug)
             else if (menuAtual == 1) {
 
                 if (opcaoAtiva == 0) {
-                    /* cadastraDisciplina(escola); */
+                    cadastro_disciplina(escola->disciplinas, escola->pessoas);
                 }
 
                 else if (opcaoAtiva == 1) {
-                    /* cadastraIndividuo(escola); */
-                }
+                    if(debug)printf("\n\nENTROU NO CADASTRO DE INDIVIDUO!\n");
+					cadastro_individuo(escola->pessoas);
+				}
 
                 else if (opcaoAtiva == 2) {
                     // Cadastro -> Atualizar
@@ -323,8 +339,15 @@ void menuv2(escola *escola, int debug)
                     menuAtivo = listaMenus[menuAtual];
                     opcaoAtiva = 0;
                 }
+				else if (opcaoAtiva == 3) {
+                    // Cadastro -> Atualizar
+                    menuAtual = menuAtivo.pai;
 
-                else if (opcaoAtiva == 3) {
+                    menuAtivo = listaMenus[menuAtual];
+                    opcaoAtiva = 0;
+                }
+
+                else if (opcaoAtiva == 4) {
                     // Cadastro -> Pai (Principal)
                     menuAtual = menuAtivo.pai;
 
@@ -339,11 +362,20 @@ void menuv2(escola *escola, int debug)
             else if (menuAtual == 2) {
 
                 if (opcaoAtiva == 0) {
-                    /* atualizarDisciplina(escola); */
+                	printContabilizado("Digite um código de disciplina para atualizar, ou 0 para retornar!");
+					unsigned int matricula;
+					scanf_limpo("%u", &matricula);
+					individuo *prt = busca_matricula(escola->pessoas, MAX_PESSOAS_ESCOLA, matricula);
+                    atualizar_individuo(prt, NULL, GERAL);
                 }
 
                 else if (opcaoAtiva == 1) {
-                    /* atualizarIndividuo(escola); */
+					printContabilizado("Digite uma matricula para atualizar, ou 0 para retornar!");
+					unsigned int matricula;
+					scanf_limpo("%u", &matricula);
+					if (matricula == 0)break;
+					individuo *prt = busca_matricula(escola->pessoas, MAX_PESSOAS_ESCOLA, matricula);
+                    atualizar_individuo(prt, NULL, GERAL);
                 }
 
                 else if (opcaoAtiva == 2) {
@@ -361,19 +393,69 @@ void menuv2(escola *escola, int debug)
             else if (menuAtual == 3) {
 
                 if (opcaoAtiva == 0) {
-                    /* listarAlunos(escola); */
+                    listar_individuos(escola->pessoas, NULL, DISCENTE);
+					menuAtual = 4;
+
+                    menuAtivo = listaMenus[menuAtual];
+                    opcaoAtiva = 0;
                 }
 
                 else if (opcaoAtiva == 1) {
-                    /* listarProfessores(escola); */
+                    listar_individuos(escola->pessoas, NULL, DOSCENTE);
+					menuAtual = 4;
+
+                    menuAtivo = listaMenus[menuAtual];
+                    opcaoAtiva = 0;
                 }
 
                 else if (opcaoAtiva == 2) {
-                    /* listarDisciplinas(escola); */
+                    listar_disciplinas(escola->disciplinas, NULL);
                 }
 
                 else if (opcaoAtiva == 3) {
                     // Relatórios -> Pai (Principal)
+                    menuAtual = menuAtivo.pai;
+
+                    menuAtivo = listaMenus[menuAtual];
+                    opcaoAtiva = 0;
+                }
+            }
+			else if (menuAtual == 4) {
+
+                if (opcaoAtiva == 0) {
+                    listar_individuos(escola->pessoas, ord_genero, DISCENTE);
+                }
+
+                else if (opcaoAtiva == 1) {
+                    listar_individuos(escola->pessoas, ord_nome, DISCENTE);
+                }
+				else if (opcaoAtiva == 2) {
+                    listar_individuos(escola->pessoas, ord_data, DISCENTE);
+                }
+
+                else if (opcaoAtiva == 3) {
+                    // Atualizar -> Pai (Cadastro)
+                    menuAtual = menuAtivo.pai;
+
+                    menuAtivo = listaMenus[menuAtual];
+                    opcaoAtiva = 0;
+                }
+            }
+			else if (menuAtual == 5) {
+
+                if (opcaoAtiva == 0) {
+                    listar_individuos(escola->pessoas, ord_genero, DOSCENTE);
+                }
+
+                else if (opcaoAtiva == 1) {
+                    listar_individuos(escola->pessoas, ord_nome, DOSCENTE);
+                }
+				else if (opcaoAtiva == 2) {
+                    listar_individuos(escola->pessoas, ord_data, DOSCENTE);
+                }
+
+                else if (opcaoAtiva == 3) {
+                    // Atualizar -> Pai (Cadastro)
                     menuAtual = menuAtivo.pai;
 
                     menuAtivo = listaMenus[menuAtual];

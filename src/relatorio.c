@@ -8,7 +8,7 @@
 //
 
 static void print_header_individuo(cargo cargo);
-static size_t procura_nome(individuo *buff, size_t tam, char *nome);
+static size_t procura_nome(individuo *buff[], size_t tam, char *nome);
 
 ordenar_i ordenar_pessoas[] = {NULL,
 			       ord_data,
@@ -17,7 +17,7 @@ ordenar_i ordenar_pessoas[] = {NULL,
 			       filtro_3_disciplinas,
 			       filtro_aniversariante,
 			       pesquisa_pessoa};
-
+/*
 void listar_individuos(individuo *lista, ordenar_i ord, cargo cargo)
 {
 	size_t tam = MAX_PESSOAS_ESCOLA;
@@ -47,54 +47,77 @@ void listar_individuos(individuo *lista, ordenar_i ord, cargo cargo)
 		}
 	}
 }
-
-void listar_disciplinas(disciplina *lista, ordenar_d ord)
+	*/
+	void listar_individuos(individuo *lista[], ordenar_i ord, cargo cargo)
 {
-	size_t tam = MAX_DISCIPLINAS_ESCOLA;
-	disciplina buff_l[tam];
+    size_t tam = 0;
+    individuo *buff_lista[MAX_PESSOAS_ESCOLA];
 
-	memcpy(buff_l, lista, sizeof(disciplina) * tam);
+    for (size_t i = 0; i < MAX_PESSOAS_ESCOLA; ++i) {
+        if (lista[i] == NULL)
+            continue;
 
-	if (ord != NULL)
-		tam = ord(buff_l, tam);
+        if (cargo != AMBOS && lista[i]->cargo != cargo)
+            continue;
 
-	puts("************************\n");
-	puts("**LISTA DE DISCIPLINAS**\n");
-	puts("************************\n\n");
+        buff_lista[tam++] = lista[i];
+    }
 
-	for (size_t i = 0; i < tam; ++i) {
-		if (buff_l[i].estado == NAO_ATIVO) {
-			continue;
-		}
+    if (ord != NULL)
+        tam = ord(buff_lista, tam);
 
-		output_disciplina(buff_l[i], false);
-	}
+    system("clear");
+    print_header_individuo(cargo);
+
+    for (size_t i = 0; i < tam; ++i)
+        output_individuo(*buff_lista[i], true);
 }
 
+void listar_disciplinas(disciplina *lista[], ordenar_d ord)
+{
+    size_t tam = MAX_DISCIPLINAS_ESCOLA;
+    disciplina *buff_l[tam];
+
+    memcpy(buff_l, lista, sizeof(disciplina *) * tam);
+
+    if (ord != NULL)
+        tam = ord(buff_l, tam);
+
+    puts("************************\n");
+    puts("**LISTA DE DISCIPLINAS**\n");
+    puts("************************\n\n");
+
+    for (size_t i = 0; i < tam; ++i) {
+        if (buff_l[i] == NULL ||
+            buff_l[i]->estado == NAO_ATIVO) {
+            continue;
+        }
+
+        output_disciplina(*buff_l[i], false);
+    }
+}
 //
 // Funções de ordenação
 //
 
-size_t ord_data(individuo *buff_l, size_t tam)
+size_t ord_data(individuo *buff_l[], size_t tam)
 {
-	for (size_t i = 1; i < tam; ++i) {
-		individuo tmp = buff_l[i];
-		size_t j = i;
+    for (size_t i = 1; i < tam; ++i) {
+        individuo *tmp = buff_l[i];
+        size_t j = i;
 
-		while (unir_data(tmp.data) < unir_data(buff_l[j - 1].data)) {
-			buff_l[j] = buff_l[j - 1];
-			--j;
+        while (unir_data(tmp->data) < unir_data(buff_l[j - 1]->data)) {
+            buff_l[j] = buff_l[j - 1];
+            --j;
+        }
 
-			continue;
-		}
+        buff_l[j] = tmp;
+    }
 
-		buff_l[j] = tmp;
-	}
-
-	return tam;
+    return tam;
 }
 
-size_t pesquisa_pessoa(individuo *buff_l, size_t tam)
+size_t pesquisa_pessoa(individuo *buff_l[], size_t tam)
 {
 	char nome[MAX_CHAR_NOME] = {0};
 
@@ -110,17 +133,17 @@ size_t pesquisa_pessoa(individuo *buff_l, size_t tam)
 	return procura_nome(buff_l, tam, nome);
 }
 
-size_t pesquisa_disciplina(disciplina *buff_l, size_t tam);
+size_t pesquisa_disciplina(disciplina *buff_l[], size_t tam);
 
-size_t filtro_3_disciplinas(individuo *buff, size_t tam)
+size_t filtro_3_disciplinas(individuo *buff[], size_t tam)
 {
 	size_t count = 0;
 	for (size_t i = 1; i < tam; ++i) {
-		individuo t = buff[i];
+		individuo *t = buff[i];
 		size_t j = i;
 
-		if (t.n_disciplinas < 3 && t.cargo == DISCENTE) {
-			while (t.n_disciplinas < buff[j - 1].n_disciplinas &&
+		if (t->n_disciplinas < 3 && t->cargo == DISCENTE) {
+			while (t->n_disciplinas < buff[j - 1]->n_disciplinas &&
 			       j > 0) {
 				buff[j] = buff[j - 1];
 				--j;
@@ -137,27 +160,29 @@ size_t filtro_3_disciplinas(individuo *buff, size_t tam)
 	return count;
 }
 
-size_t ord_nome(individuo *buff_l, size_t tam)
+size_t ord_nome(individuo *buff_l[], size_t tam)
 {
-	for (size_t i = 1; i < tam; ++i) {
-		individuo tmp = buff_l[i];
-		size_t j = i;
+    for (size_t i = 1; i < tam; ++i) {
+        individuo *tmp = buff_l[i];
+        size_t j = i;
 
-		while (ordem_alfabetica(tmp.nome, buff_l[j - 1].nome) == true &&
-		       j > 0) {
-			buff_l[j] = buff_l[j - 1];
-			--j;
+        while (j > 0 &&
+               ordem_alfabetica(
+                   tmp->nome,
+                   buff_l[j - 1]->nome
+               ) == true) {
 
-			continue;
-		}
+            buff_l[j] = buff_l[j - 1];
+            --j;
+        }
 
-		buff_l[j] = tmp;
-	}
+        buff_l[j] = tmp;
+    }
 
-	return tam;
+    return tam;
 }
 
-size_t filtro_aniversariante(individuo *buff, size_t tam)
+size_t filtro_aniversariante(individuo *buff[], size_t tam)
 {
 	size_t count = 0;
 	time_t mytime = time(NULL);
@@ -165,11 +190,11 @@ size_t filtro_aniversariante(individuo *buff, size_t tam)
 	unsigned long mes_atual = (unsigned long)tm.tm_mon;
 
 	for (size_t i = 0; i < tam; ++i) {
-		individuo t = buff[i];
+		individuo *t = buff[i];
 		size_t j = i;
 
-		if (t.data.mes == mes_atual) {
-			while (t.data.mes != buff[j - 1].data.mes && j > 0) {
+		if (t->data.mes == mes_atual) {
+			while (t->data.mes != buff[j - 1]->data.mes && j > 0) {
 				buff[j] = buff[j - 1];
 				--j;
 
@@ -184,26 +209,25 @@ size_t filtro_aniversariante(individuo *buff, size_t tam)
 
 	return count;
 }
-
-size_t ord_genero(individuo *buff, size_t tam)
+size_t ord_genero(individuo *buff[], size_t tam)
 {
-	for (size_t i = 0; i < tam; ++i) {
-		individuo t = buff[i];
-		size_t j = i;
+    for (size_t i = 1; i < tam; ++i) {
+        individuo *t = buff[i];
+        size_t j = i;
 
-		while (t.genero == FEM && buff[j - 1].genero == MASC && j > 0) {
-			buff[j] = buff[j - 1];
-			--j;
+        while (j > 0 &&
+               t->genero == FEM &&
+               buff[j - 1]->genero == MASC) {
 
-			continue;
-		}
+            buff[j] = buff[j - 1];
+            --j;
+        }
 
-		buff[j] = t;
-	}
+        buff[j] = t;
+    }
 
-	return tam;
+    return tam;
 }
-
 //
 // Funções de output
 //
@@ -234,7 +258,7 @@ void output_disciplina(disciplina disciplina, int alunos)
 {
 	if (disciplina.estado == NAO_ATIVO)
 		return;
-
+	system("clear");
 	printf("Disciplina: %s\n", disciplina.nome);
 	printf("Código: %s\n", disciplina.codigo);
 	printf("Semestre: %u\n", disciplina.semestre);
@@ -253,15 +277,15 @@ void output_disciplina(disciplina disciplina, int alunos)
 // FUNÇÕES LOCAIS
 //
 
-static size_t procura_nome(individuo *buff, size_t tam, char *nome)
+static size_t procura_nome(individuo *buff[], size_t tam, char *nome)
 {
 	size_t count = 0;
 	for (size_t i = 1; i < tam; ++i) {
-		individuo t = buff[i];
+		individuo *t = buff[i];
 		size_t j = i;
 
-		if (compara_strings(nome, t.nome)) {
-			while (!(compara_strings(nome, buff[j - 1].nome))) {
+		if (compara_strings(nome, t->nome)) {
+			while (!(compara_strings(nome, buff[j - 1]->nome))) {
 				buff[j] = buff[j - 1];
 				--j;
 
@@ -282,21 +306,21 @@ static void print_header_individuo(cargo cargo)
 
 	switch (cargo) {
 	case DOSCENTE:
-		puts("************************\n");
+		//puts("************************\n");
 		puts("**LISTA DE PROFESSORES**\n");
-		puts("************************\n\n");
+		//puts("************************\n\n");
 		break;
 
 	case DISCENTE:
-		puts("***********************\n");
+		//puts("***********************\n");
 		puts("****LISTA DE ALUNOS****\n");
-		puts("***********************\n\n");
+		//puts("***********************\n\n");
 		break;
 
 	case AMBOS:
-		puts("**********************\n");
+		//puts("**********************\n");
 		puts("***LISTA DE PESSOAS***\n");
-		puts("**********************\n\n");
+		//puts("**********************\n\n");
 		break;
 	default:
 		break;

@@ -57,7 +57,7 @@ int ano_eh_bissexto(unsigned int ano)
 
 	return 1;
 }
-
+/*
 individuo *busca_matricula(individuo *lista, size_t tam, unsigned int matricula)
 {
 	individuo *ptr = lista;
@@ -71,6 +71,24 @@ individuo *busca_matricula(individuo *lista, size_t tam, unsigned int matricula)
 	}
 
 	return NULL;
+}
+	*/
+individuo *busca_matricula(
+    individuo *lista[],
+    size_t tam,
+    unsigned int matricula
+)
+{
+    for (size_t i = 0; i < tam; ++i) {
+
+        if (lista[i] != NULL &&
+            lista[i]->matricula == matricula) {
+
+            return lista[i];
+        }
+    }
+
+    return NULL;
 }
 
 disciplina *busca_codigo(disciplina *lista, size_t tam, char *codigo)
@@ -117,20 +135,20 @@ int input_char_non_canon(void)
 
 	return ch;
 }
-
 int ordem_alfabetica(const char *s1, const char *s2)
 {
-	size_t len1 = strlen(s1) - 1;
-	size_t len2 = strlen(s2) - 1;
+    size_t len1 = strlen(s1);
+    size_t len2 = strlen(s2);
 
-	for (size_t i = 0; i < len1 && i < len2;) {
-		if (s1[i] < s2[i])
-			return 1;
-		if (s1[i] == s2[i])
-			++i;
-	}
+    for (size_t i = 0; i < len1 && i < len2; ++i) {
+        if (s1[i] < s2[i])
+            return 1;
 
-	return 0;
+        if (s1[i] > s2[i])
+            return 0;
+    }
+
+    return len1 < len2;
 }
 
 int unir_data(data tmp)

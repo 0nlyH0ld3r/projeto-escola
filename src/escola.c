@@ -2,15 +2,36 @@
 #include "../headers/constants.h"
 #include "../headers/relatorio.h"
 #include "../headers/utilidades.h"
-
+/*
 void cadastro_individuo(individuo *pessoas)
 {
-	size_t tam = MAX_PESSOAS_ESCOLA;
-	size_t index = 0;
-	procura_vaga(pessoas, tam, index);
-	input_individuo(&pessoas[index], NULL, GERAL);
-}
+    size_t tam = MAX_PESSOAS_ESCOLA;
+    size_t index = 0;
 
+    procura_vaga(pessoas, tam, index);
+
+    input_individuo(&pessoas[index], NULL, GERAL);
+}
+	*/
+void cadastro_individuo(individuo *pessoas[])
+{
+    size_t index;
+
+    for (index = 0; index < MAX_PESSOAS_ESCOLA; index++) {
+        if (pessoas[index] == NULL) {
+            pessoas[index] = calloc(1, sizeof(individuo));
+            break;
+        }
+    }
+
+    if (index == MAX_PESSOAS_ESCOLA) {
+        puts("\n\tLista de pessoas cheia!\n");
+        return;
+    }
+
+    input_individuo(pessoas[index], NULL, GERAL);
+}
+/*
 void cadastro_disciplina(disciplina *lista, individuo *lista_prof)
 {
 	size_t tam = MAX_DISCIPLINAS_ESCOLA;
@@ -19,11 +40,30 @@ void cadastro_disciplina(disciplina *lista, individuo *lista_prof)
 	procura_vaga(lista, tam, index);
 	input_disciplina(&lista[index], lista_prof, GERAL);
 }
+	*/
+void cadastro_disciplina(disciplina *lista[], individuo *lista_prof[])
+{
+    size_t index;
 
-void remover_individuo(individuo *lista)
+    for (index = 0; index < MAX_DISCIPLINAS_ESCOLA; ++index) {
+        if (lista[index] == NULL) {
+            lista[index] = calloc(1, sizeof(disciplina));
+            break;
+        }
+    }
+
+    if (index == MAX_DISCIPLINAS_ESCOLA) {
+        puts("\n\tLista de disciplinas cheia!\n");
+        return;
+    }
+
+    input_disciplina(lista[index], lista_prof, GERAL);
+}
+
+void remover_individuo(individuo *lista[])
 {
 	for (size_t i = 0; i < MAX_PESSOAS_ESCOLA; ++i)
-		output_individuo(lista[i], false);
+		output_individuo(*lista[i], false);
 
 	printf("\nDigite a matrícula da pessoa a ser deletada: ");
 	unsigned int matricula;
@@ -92,19 +132,19 @@ void input_individuo(individuo *pessoa, disciplina *disciplinas, int opcao)
 	case NOME:
 		puts("Digite seu nome: ");
 		input_string(pessoa->nome, 40);
-
+		system("clear");
 		if (opcao != GERAL)
 			return;
 
 	case CPF:
-		puts("\n\nDigite seu CPF (111.111.111-11): ");
+		puts("\n\nDigite seu CPF (somente números, sem pontos ou espaço!):");
 		input_string(pessoa->cpf, MAX_CHAR_CPF);
-
+		system("clear");
 		if (opcao != GERAL)
 			return;
 
 	case CARGO:
-		puts("\nÉ doscente? (S - Sim | N - Sim): ");
+		puts("\nÉ doscente? (S - Sim | N - Não): ");
 		switch (input_char_non_canon()) {
 		case 'S':
 		case 's':
@@ -116,7 +156,7 @@ void input_individuo(individuo *pessoa, disciplina *disciplinas, int opcao)
 			pessoa->cargo = DISCENTE;
 			break;
 		}
-
+		system("clear");
 		if (opcao != GERAL)
 			return;
 
@@ -133,7 +173,7 @@ void input_individuo(individuo *pessoa, disciplina *disciplinas, int opcao)
 			pessoa->genero = 'F';
 			break;
 		}
-
+		system("clear");
 		if (opcao != GERAL)
 			return;
 
@@ -148,6 +188,7 @@ void input_individuo(individuo *pessoa, disciplina *disciplinas, int opcao)
 			pessoa->data.dia = data / 1000000;
 
 		} while (data_eh_valida(pessoa->data) == false);
+		system("clear");
 		break;
 
 	case DISCIPLINA:
@@ -186,7 +227,7 @@ void input_individuo(individuo *pessoa, disciplina *disciplinas, int opcao)
 
 	pessoa->estado = ATIVO;
 }
-
+/*
 void input_disciplina(disciplina *disciplina, individuo *lista_prof, int opcao)
 {
 	if (disciplina == NULL) {
@@ -244,4 +285,81 @@ void input_disciplina(disciplina *disciplina, individuo *lista_prof, int opcao)
 		puts("\n");
 		break;
 	}
+}
+*/
+void input_disciplina(
+    disciplina *disciplina,
+    individuo *lista_prof[],
+    int opcao
+)
+{
+    if (disciplina == NULL) {
+        puts("\n\tDisciplina não encontrada!\n");
+        return;
+    }
+
+    switch (opcao) {
+    case GERAL:
+    case NOME:
+		system("clear");
+        puts("Digite o nome da disciplina: ");
+        input_string(disciplina->nome, MAX_CHAR_NOME);
+
+        if (opcao != GERAL)
+            break;
+
+    case CODIGO:
+		system("clear");
+        puts("\nDigite o código da disciplina (ex: INF029): ");
+        input_string(disciplina->codigo, MAX_CHAR_COD_DISCIPLINA);
+
+        if (opcao != GERAL)
+            break;
+
+    case SEMESTRE:
+		system("clear");
+        puts("\nDigite em qual semestre essa disciplina é "
+             "obrigatória: ");
+        scanf_limpo("%u", &disciplina->semestre);
+
+    case PROFESSOR:
+		system("clear");
+        puts("\nAperte qualquer tecla para entrar no menu de seleção "
+             "do professor responsável: ");
+        input_char_non_canon();
+
+        disciplina->estado = ATIVO;
+        unsigned int matricula;
+
+        for (size_t i = 0; i < MAX_PESSOAS_ESCOLA; ++i) {
+            if (lista_prof[i] != NULL &&
+                lista_prof[i]->cargo == DOSCENTE) {
+
+                output_individuo(*lista_prof[i], false);
+            }
+        }
+
+        puts("\nSelecione o professor pela matrícula: ");
+
+        do {
+            scanf_limpo("%u", &matricula);
+
+            disciplina->professor = busca_matricula(
+                lista_prof,
+                MAX_PESSOAS_ESCOLA,
+                matricula
+            );
+
+            if (disciplina->professor != NULL &&
+                disciplina->professor->cargo == DOSCENTE)
+                break;
+
+            puts("\nDigite a matrícula válida de um professor!\n:");
+
+        } while (1);
+
+        output_disciplina(*disciplina, false);
+        puts("\n");
+        break;
+    }
 }
