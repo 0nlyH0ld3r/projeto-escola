@@ -78,7 +78,7 @@ void remover_individuo(individuo *lista[])
 
 	pessoa->estado = NAO_ATIVO;
 }
-
+/*
 void remover_disciplina(disciplina *lista)
 {
 	for (size_t i = 0; i < MAX_DISCIPLINAS_ESCOLA; ++i) {
@@ -97,7 +97,7 @@ void remover_disciplina(disciplina *lista)
 
 	disciplina->estado = NAO_ATIVO;
 }
-
+*/
 void atualizar_individuo(individuo *pessoa, disciplina *disciplinas, int opcao)
 {
 	if (pessoa == NULL) {
@@ -293,6 +293,7 @@ void input_disciplina(
     int opcao
 )
 {
+	int total_professor = 0;
     if (disciplina == NULL) {
         puts("\n\tDisciplina não encontrada!\n");
         return;
@@ -301,7 +302,7 @@ void input_disciplina(
     switch (opcao) {
     case GERAL:
     case NOME:
-		system("clear");
+		system("clear"); 
         puts("Digite o nome da disciplina: ");
         input_string(disciplina->nome, MAX_CHAR_NOME);
 
@@ -334,10 +335,15 @@ void input_disciplina(
         for (size_t i = 0; i < MAX_PESSOAS_ESCOLA; ++i) {
             if (lista_prof[i] != NULL &&
                 lista_prof[i]->cargo == DOSCENTE) {
-
+				total_professor++;
                 output_individuo(*lista_prof[i], false);
             }
         }
+		if(total_professor == 0){
+			puts("\n Não existem professores cadastrados,\
+				por favor cadastre um professor primeiro!");
+			break;
+		}
 
         puts("\nSelecione o professor pela matrícula: ");
 

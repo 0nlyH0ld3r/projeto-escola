@@ -410,6 +410,7 @@ void menuv2(escola *escola, int debug)
                 }
 
                 else if (opcaoAtiva == 2) {
+					system("clear");
                     listar_disciplinas(escola->disciplinas, NULL);
                 }
 
@@ -421,6 +422,9 @@ void menuv2(escola *escola, int debug)
                     opcaoAtiva = 0;
                 }
             }
+			/*
+             * MENU RELATÓRIOS ALUNO
+             */
 			else if (menuAtual == 4) {
 
                 if (opcaoAtiva == 0) {
@@ -442,6 +446,9 @@ void menuv2(escola *escola, int debug)
                     opcaoAtiva = 0;
                 }
             }
+			/*
+             * MENU RELATÓRIOS DOCENTE
+             */
 			else if (menuAtual == 5) {
 
                 if (opcaoAtiva == 0) {

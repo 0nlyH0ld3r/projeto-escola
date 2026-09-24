@@ -90,7 +90,7 @@ individuo *busca_matricula(
 
     return NULL;
 }
-
+/*
 disciplina *busca_codigo(disciplina *lista[], size_t tam, char *codigo)
 {
 	disciplina *ptr = *lista;
@@ -105,6 +105,23 @@ disciplina *busca_codigo(disciplina *lista[], size_t tam, char *codigo)
 
 	return NULL;
 }
+*/
+disciplina *busca_codigo(
+    disciplina *lista[],
+    size_t tam,
+    char *codigo
+)
+{
+    for (size_t i = 0; i < tam; ++i) {
+        if (lista[i] != NULL &&
+            compara_strings(lista[i]->codigo, codigo)) {
+
+            return lista[i];
+        }
+    }
+
+    return NULL;
+}
 
 void input_string(char *string, size_t tam)
 {
@@ -114,12 +131,14 @@ void input_string(char *string, size_t tam)
 
 int compara_strings(const char *string1, const char *string2)
 {
-	size_t len1 = strlen(string1) - 1;
-	size_t len2 = strlen(string2) - 1;
-	size_t len = len1 > len2 ? len2 : len1;
-	return !strncmp(string1, string2, len);
-}
+    size_t len1 = strcspn(string1, "\n");
+    size_t len2 = strcspn(string2, "\n");
 
+    if (len1 != len2)
+        return 0;
+
+    return strncmp(string1, string2, len1) == 0;
+}
 int input_char_non_canon(void)
 {
 	struct termios old_t;
