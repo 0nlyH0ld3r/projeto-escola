@@ -95,8 +95,8 @@ disciplina *busca_codigo(disciplina *lista[], size_t tam, char *codigo)
 {
 	disciplina *ptr = *lista;
 
-	for (register size_t i = 0; i < tam; ++i) {
-		if (lista[i] != NULL && compara_strings(lista[i]->codigo, codigo)) {
+	for (size_t i = 0; i < tam; ++i) {
+		if (ptr != NULL && compara_strings(codigo, ptr->codigo)) {
 			return ptr;
 		}
 
@@ -114,10 +114,7 @@ void input_string(char *string, size_t tam)
 
 int compara_strings(const char *string1, const char *string2)
 {
-	size_t len1 = strlen(string1) - 1;
-	size_t len2 = strlen(string2) - 1;
-	size_t len = len1 > len2 ? len2 : len1;
-	return !strncmp(string1, string2, len);
+	return !strncmp(string1, string2, strlen(string1));
 }
 
 int input_char_non_canon(void)
